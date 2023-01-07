@@ -12,6 +12,8 @@ from rest_framework.permissions import AllowAny, IsAuthenticated, BasePermission
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
 from django.core.mail import send_mail
 from django.conf import settings
+from authentication.models import User
+from authentication.serializer import UserSerializer
 
 # Create your views here.
 class ProductViewSet(generics.CreateAPIView):
@@ -75,10 +77,35 @@ class AcceptRequest(generics.GenericAPIView, UpdateModelMixin):
         subject = f'Request for {transaction.product.name} accepted'
         message = f'Hi {transaction.toOwner.username}, your request for {transaction.product.name} has been accepted.\nHead over to the product page to see the details.'
         send_mail(subject=subject, message=message,from_email=settings.DEFAULT_FROM_EMAIL, recipient_list=[transaction.toOwner.email], fail_silently=False)
-        
+
         Product.objects.filter(id=transaction.product.id).update(current_owner=transaction.toOwner, available=False)
 
         return Response(serializer.data)
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
+
+class Profile(generics.GenericAPIView, ListModelMixin):
+   
+
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+   
+
+    def get(self, request, *args, **kwargs):
+
+        my_request = Transaction.objects.filter(fromOwner=request.user)
+        request_to_me = Transaction.objects.filter(toOwner=request.user)
+        products = Product.objects.filter(current_owner=request.user)
+        product_serializer = ProductSerializer(products, many=True)
+        user_serializer = UserSerializer(request.user)
+        transactions_serializer_my_request = TransactionSerializer(my_request, many=True)
+        transactions_serializer_request_to_me = TransactionSerializer(request_to_me, many=True)
+
+        json = {
+            "product":product_serializer.data,
+            "my_request":transactions_serializer_my_request.data,
+            "request_to_me":transactions_serializer_request_to_me.data,
+            "user": user_serializer.data
+        }
+        return Response(data=json, status=status.HTTP_200_OK)
