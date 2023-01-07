@@ -1,0 +1,23 @@
+/* body {
+} */
+
+.form-floating>input{
+    font-size: calc(1.1rem - .1vw);
+    color: rgba(1, 90, 72, 0.822);
+}
+
+#sideimage{
+    animation: sideimageanimation 4s infinite;
+}
+
+@keyframes sideimageanimation{
+    0%{
+        transform: translateY(-10px);
+    }
+    50%{
+        transform: translateY(10px);
+    }
+    100%{
+        transform: translateY(-10px)
+    }
+}
