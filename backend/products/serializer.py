@@ -12,6 +12,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ('name','description','owner','current_owner','photo1','photo2','photo3','photo4','photo5','available', 'id')
+        read_only_fields = ('owner','current_owner','available', 'id')
 
     def create(self, validated_data):
         product = Product.objects.create(
@@ -22,8 +23,8 @@ class ProductSerializer(serializers.ModelSerializer):
             photo3=validated_data.get('photo3', None),
             photo4=validated_data.get('photo4', None),
             photo5=validated_data.get('photo5', None),
-            owner=validated_data['owner'],
-            current_owner=self.request.user,
+            owner=self.context['request'].user,
+            current_owner=self.context['request'].user,
             available=True,
         )
         product.save()

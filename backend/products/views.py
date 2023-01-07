@@ -17,6 +17,9 @@ from authentication.serializer import UserSerializer
 
 # Create your views here.
 class ProductViewSet(generics.CreateAPIView):
+    
+    permission_classes = [IsAuthenticated]
+    
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     parser_classes = (MultiPartParser, FormParser)
@@ -27,7 +30,7 @@ class ProductViewSet(generics.CreateAPIView):
             product = Product.objects.get(id=id)
             serializer = ProductSerializer(product)
             return Response(serializer.data)
-        products = Product.objects.filter(current_owner__college=request.user)
+        products = Product.objects.filter(current_owner__college=request.user.college)
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
