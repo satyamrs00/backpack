@@ -23,7 +23,7 @@ class ProductSerializer(serializers.ModelSerializer):
             photo4=validated_data.get('photo4', None),
             photo5=validated_data.get('photo5', None),
             owner=validated_data['owner'],
-            current_owner=validated_data['current_owner'],
+            current_owner=self.request.user,
             available=True,
         )
         product.save()
