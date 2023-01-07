@@ -4,7 +4,7 @@ from .models import Product, Transaction
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    photo1 = serializers.ImageField(required=False)
+    photo1 = serializers.ImageField(required=True)
     photo2 = serializers.ImageField(required=False)
     photo3 = serializers.ImageField(required=False)
     photo4 = serializers.ImageField(required=False)
@@ -17,11 +17,11 @@ class ProductSerializer(serializers.ModelSerializer):
         product = Product.objects.create(
             name=validated_data['name'],
             description=validated_data['description'],
-            photo1=validated_data['photo1'],
-            photo2=validated_data['photo2'],
-            photo3=validated_data['photo3'],
-            photo4=validated_data['photo4'],
-            photo5=validated_data['photo5'],
+            photo1=validated_data.get('photo1', None),
+            photo2=validated_data.get('photo2', None),
+            photo3=validated_data.get('photo3', None),
+            photo4=validated_data.get('photo4', None),
+            photo5=validated_data.get('photo5', None),
             owner=validated_data['owner'],
             current_owner=validated_data['current_owner'],
             available=True,
