@@ -35,12 +35,12 @@ class TransactionSerializer(serializers.ModelSerializer):
     product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(), required=False)
     class Meta:
         model = Transaction
-        fields = ('product','fromOwner','toOwner', 'status')
-        read_only_fields = ('status','fromOwner','toOwner',)
+        fields = ('product','fromOwner','toOwner', 'status', 'id')
+        read_only_fields = ('status','fromOwner','toOwner', 'id')
 
     def create(self, validated_data):
         transaction = Transaction.objects.create(
-            product=validated_data['product'],
+            product=validated_data.get('product'),
             fromOwner=Product.objects.get(id=validated_data['product'].id).current_owner,
             toOwner=self.context['request'].user,
         )
@@ -48,7 +48,7 @@ class TransactionSerializer(serializers.ModelSerializer):
         return transaction
 
     def update(self, instance, validated_data):
-        instance.status = 'accepted'
+        instance.status = validated_data.get('status', instance.status)
         instance.product = validated_data.get('product', instance.product)
         instance.fromOwner = validated_data.get('fromOwner', instance.fromOwner)
         instance.toOwner = validated_data.get('toOwner', instance.toOwner)

@@ -61,7 +61,7 @@ class RequestProduct(generics.GenericAPIView, CreateModelMixin):
         send_mail(subject=subject, message=message,from_email=settings.DEFAULT_FROM_EMAIL, recipient_list=[Product.objects.get(id=request.data["product"]).current_owner.email], fail_silently=False)
         return self.create(request, *args, **kwargs)
 
-class AcceptRequest(generics.GenericAPIView, UpdateModelMixin):
+class AcceptOrRejectRequest(generics.GenericAPIView, UpdateModelMixin):
     class IsCurrentOwner(BasePermission):
         def has_permission(self, request, view):
             return request.user == Transaction.objects.get(id=request.data["transaction"]).product.current_owner
@@ -77,11 +77,17 @@ class AcceptRequest(generics.GenericAPIView, UpdateModelMixin):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        subject = f'Request for {transaction.product.name} accepted'
-        message = f'Hi {transaction.toOwner.username}, your request for {transaction.product.name} has been accepted.\nHead over to the product page to see the details.'
-        send_mail(subject=subject, message=message,from_email=settings.DEFAULT_FROM_EMAIL, recipient_list=[transaction.toOwner.email], fail_silently=False)
+        if request.data["status"] == "rejected":
+            subject = f'Request for {transaction.product.name} rejected'
+            message = f'Hi {transaction.toOwner.username}, your request for {transaction.product.name} has been rejected.\nHead over to the product page to see the details.'
+        elif request.data["status"] == "accepted":
+            subject = f'Request for {transaction.product.name} accepted'
+            message = f'Hi {transaction.toOwner.username}, your request for {transaction.product.name} has been accepted.\nHead over to the product page to see the details.'
 
-        Product.objects.filter(id=transaction.product.id).update(current_owner=transaction.toOwner, available=False)
+        send_mail(subject=subject, message=message,from_email=settings.DEFAULT_FROM_EMAIL, recipient_list=[transaction.toOwner.email], fail_silently=False)
+        
+        if request.data["status"] == "accepted":
+            Product.objects.filter(id=transaction.product.id).update(current_owner=transaction.toOwner, available=False)
 
         return Response(serializer.data)
 
