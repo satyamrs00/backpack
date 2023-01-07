@@ -44,7 +44,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        images_data = self.context['request'].FILES
+        print(validated_data)
+        images_data = self.context['request'].data
         print(images_data)
 
         user = User.objects.create(

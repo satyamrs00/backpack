@@ -47,13 +47,21 @@ class ProductViewSet(generics.CreateAPIView):
         serializer.save()
 
 class RequestProduct(generics.GenericAPIView, CreateModelMixin):
-    class IsSameCollege(BasePermission):
+    class IsSameCollegeButNotSelf(BasePermission):
         def has_permission(self, request, view):
-            return request.user.college == Product.objects.get(id=request.data["product"]).current_owner.college
+            return request.user.college == Product.objects.get(id=request.data["product"]).current_owner.college and request.user != Product.objects.get(id=request.data["product"]).current_owner
 
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
-    permission_classes = [IsSameCollege]
+    permission_classes = [IsSameCollegeButNotSelf]
+
+    def create(self, request, *args, **kwargs):
+        print(request.data, 'views')
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def post(self, request, *args, **kwargs):
         subject = f'New Request for your product {Product.objects.get(id=request.data["product"]).name}'
@@ -73,7 +81,7 @@ class AcceptOrRejectRequest(generics.GenericAPIView, UpdateModelMixin):
     def update(self, request, *args, **kwargs):
         transaction = Transaction.objects.get(id=self.request.data["transaction"])
 
-        serializer = TransactionSerializer(transaction, data=request.data)
+        serializer = TransactionSerializer(transaction, data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
@@ -103,13 +111,13 @@ class Profile(generics.GenericAPIView, ListModelMixin):
 
     def get(self, request, *args, **kwargs):
 
-        my_request = Transaction.objects.filter(fromOwner=request.user)
-        request_to_me = Transaction.objects.filter(toOwner=request.user)
+        my_request = Transaction.objects.filter(toOwner=request.user)
+        request_to_me = Transaction.objects.filter(fromOwner=request.user)
         products = Product.objects.filter(current_owner=request.user)
         product_serializer = ProductSerializer(products, many=True)
         user_serializer = UserSerializer(request.user)
-        transactions_serializer_my_request = TransactionSerializer(my_request, many=True)
-        transactions_serializer_request_to_me = TransactionSerializer(request_to_me, many=True)
+        transactions_serializer_my_request = TransactionSerializer(my_request, many=True, context={'request': request})
+        transactions_serializer_request_to_me = TransactionSerializer(request_to_me, many=True, context={'request': request})
 
         json = {
             "product":product_serializer.data,

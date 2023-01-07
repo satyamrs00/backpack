@@ -1,9 +1,12 @@
 from .models import Product, Transaction
 from rest_framework import serializers
 from .models import Product, Transaction
+from authentication.serializer import UserSerializer
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    owner = UserSerializer(read_only=True)
+    current_owner = UserSerializer(read_only=True)
     photo1 = serializers.ImageField(required=True)
     photo2 = serializers.ImageField(required=False)
     photo3 = serializers.ImageField(required=False)
@@ -31,26 +34,31 @@ class ProductSerializer(serializers.ModelSerializer):
         return product
 
 
-class TransactionSerializer(serializers.ModelSerializer):
-    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(), required=False)
+class TransactionSerializer(serializers.HyperlinkedModelSerializer):
+    fromOwner = UserSerializer(read_only=True)
+    toOwner = UserSerializer(read_only=True)
+    product = ProductSerializer(required=False)
     class Meta:
         model = Transaction
         fields = ('product','fromOwner','toOwner', 'status', 'id')
         read_only_fields = ('status','fromOwner','toOwner', 'id')
 
     def create(self, validated_data):
+        req_data = self.context['request'].data
         transaction = Transaction.objects.create(
-            product=validated_data.get('product'),
-            fromOwner=Product.objects.get(id=validated_data['product'].id).current_owner,
+            product=Product.objects.get(id=req_data['product']),
+            fromOwner=Product.objects.get(id=req_data['product']).current_owner,
             toOwner=self.context['request'].user,
         )
         transaction.save()
         return transaction
 
     def update(self, instance, validated_data):
-        instance.status = validated_data.get('status', instance.status)
-        instance.product = validated_data.get('product', instance.product)
-        instance.fromOwner = validated_data.get('fromOwner', instance.fromOwner)
-        instance.toOwner = validated_data.get('toOwner', instance.toOwner)
+        print(self.context['request'].data)
+        req_data = self.context['request'].data
+        instance.status = req_data.get('status', instance.status)
+        instance.product = req_data.get('product', instance.product)
+        instance.fromOwner = req_data.get('fromOwner', instance.fromOwner)
+        instance.toOwner = req_data.get('toOwner', instance.toOwner)
         instance.save()
         return instance
