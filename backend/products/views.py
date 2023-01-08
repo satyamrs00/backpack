@@ -16,8 +16,12 @@ from authentication.models import User
 from authentication.serializer import UserSerializer
 
 # Create your views here.
+
+class IsCurrentOwner(BasePermission):
+    def has_permission(self, request, view):
+        return request.user == Transaction.objects.get(id=request.data["transaction"]).product.current_owner
+
 class ProductViewSet(generics.CreateAPIView):
-    
     permission_classes = [IsAuthenticated]
     
     queryset = Product.objects.all()
@@ -45,6 +49,14 @@ class ProductViewSet(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save()
+    
+    def put(self, request, *args, **kwargs):
+        self.permission_classes = [IsAuthenticated, IsCurrentOwner]
+        Product.objects.filter(id=request.data["product"]).update(available=True)
+        product = Product.objects.get(id=request.data["product"])
+        product_serializer = ProductSerializer(product)
+        return Response(product_serializer.data, status=status.HTTP_200_OK)
+
 
 class RequestProduct(generics.GenericAPIView, CreateModelMixin):
     class IsSameCollegeButNotSelf(BasePermission):
@@ -70,9 +82,6 @@ class RequestProduct(generics.GenericAPIView, CreateModelMixin):
         return self.create(request, *args, **kwargs)
 
 class AcceptOrRejectRequest(generics.GenericAPIView, UpdateModelMixin):
-    class IsCurrentOwner(BasePermission):
-        def has_permission(self, request, view):
-            return request.user == Transaction.objects.get(id=request.data["transaction"]).product.current_owner
 
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer

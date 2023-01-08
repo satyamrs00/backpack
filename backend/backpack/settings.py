@@ -201,5 +201,7 @@ SECURE_HSTS_SECONDS = 3600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
+APPEND_SLASH=False
+
 if os.environ.get('DEVELOPMENT') is not None:
     from .dev_settings import *
