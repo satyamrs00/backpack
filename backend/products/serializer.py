@@ -7,25 +7,25 @@ from authentication.serializer import UserSerializer
 class ProductSerializer(serializers.ModelSerializer):
     owner = UserSerializer(read_only=True)
     current_owner = UserSerializer(read_only=True)
-    # photo1 = serializers.ImageField(required=True)
-    # photo2 = serializers.ImageField(required=False)
-    # photo3 = serializers.ImageField(required=False)
-    # photo4 = serializers.ImageField(required=False)
-    # photo5 = serializers.ImageField(required=False)
+    photo1 = serializers.ImageField(required=True)
+    photo2 = serializers.ImageField(required=False)
+    photo3 = serializers.ImageField(required=False)
+    photo4 = serializers.ImageField(required=False)
+    photo5 = serializers.ImageField(required=False)
     class Meta:
         model = Product
-        fields = ('name','description','owner','current_owner','available', 'id') # ,'photo1','photo2','photo3','photo4','photo5'
+        fields = ('name','description','owner','current_owner','photo1','photo2','photo3','photo4','photo5','available', 'id')
         read_only_fields = ('owner','current_owner','available', 'id')
 
     def create(self, validated_data):
         product = Product.objects.create(
             name=validated_data['name'],
             description=validated_data['description'],
-            # photo1=validated_data.get('photo1', None),
-            # photo2=validated_data.get('photo2', None),
-            # photo3=validated_data.get('photo3', None),
-            # photo4=validated_data.get('photo4', None),
-            # photo5=validated_data.get('photo5', None),
+            photo1=validated_data.get('photo1', None),
+            photo2=validated_data.get('photo2', None),
+            photo3=validated_data.get('photo3', None),
+            photo4=validated_data.get('photo4', None),
+            photo5=validated_data.get('photo5', None),
             owner=self.context['request'].user,
             current_owner=self.context['request'].user,
             available=True,

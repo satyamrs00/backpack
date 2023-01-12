@@ -30,11 +30,11 @@ class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True, required=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
-    # profile_pic = serializers.ImageField(required=False)
+    profile_pic = serializers.ImageField(required=False)
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'password2', 'address', 'phone', 'college', 'batch', 'email', 'first_name', 'last_name') # 'profile_pic'
+        fields = ('username', 'password', 'password2', 'address', 'phone', 'college', 'profile_pic', 'batch', 'email', 'first_name', 'last_name')
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -51,7 +51,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             address=validated_data['address'],
             phone=validated_data['phone'],
             college=validated_data['college'],
-            # profile_pic=validated_data['profile_pic'],
+            profile_pic=validated_data['profile_pic'],
             batch=validated_data['batch'],
             email=validated_data['email'],
             first_name=validated_data['first_name'],
@@ -67,4 +67,4 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserSerializer (serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'address', 'phone', 'college', 'batch', 'id') # 'profile_pic'
+        fields = ('username', 'email', 'first_name', 'last_name', 'address', 'phone', 'college', 'batch', 'profile_pic','id')
