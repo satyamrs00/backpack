@@ -1,23 +1,50 @@
-/* body {
-} */
+body {
+    margin: 0;
+    padding: 0;
 
-.form-floating>input{
+}
+
+::-webkit-scrollbar{
+    width: 0;
+    background: transparent;
+}
+
+.menuBtn[aria-expanded=false] .fa-caret-up {
+    display: none;
+}
+
+.menuBtn[aria-expanded=true] .fa-caret-down {
+    display: none;
+}
+
+.form-floating>input {
     font-size: calc(1.1rem - .1vw);
     color: rgba(1, 90, 72, 0.822);
 }
 
-#sideimage{
+#sideimage {
     animation: sideimageanimation 4s infinite;
 }
 
-@keyframes sideimageanimation{
-    0%{
+@keyframes sideimageanimation {
+    0% {
         transform: translateY(-10px);
     }
-    50%{
+
+    50% {
         transform: translateY(10px);
     }
-    100%{
+
+    100% {
         transform: translateY(-10px)
     }
+}
+
+.btnBg{
+    background-color: rgb(5 220 218);
+    color: "#161515"    
+}
+
+.btnBg:active {
+    background-color: rgb(5, 172, 169);
 }
