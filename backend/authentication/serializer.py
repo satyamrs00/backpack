@@ -45,15 +45,13 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         print(validated_data)
-        images_data = self.context['request'].data
-        print(images_data)
 
         user = User.objects.create(
             username=validated_data['username'],
             address=validated_data['address'],
             phone=validated_data['phone'],
             college=validated_data['college'],
-            profile_pic=images_data['profile_pic'],
+            profile_pic=validated_data['profile_pic'],
             batch=validated_data['batch'],
             email=validated_data['email'],
             first_name=validated_data['first_name'],

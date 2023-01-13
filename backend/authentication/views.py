@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
 from django.http import JsonResponse
-from .serializer import MyTokenObtainPairSerializer, RegisterSerializer
+from .serializer import MyTokenObtainPairSerializer, RegisterSerializer, UserSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics
 from .models import User
@@ -22,7 +22,13 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     parser_classes = (MultiPartParser, FormParser)
 
+class UserView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated,)
 
+    def get_object(self):
+        return self.request.user
 
 @api_view(['GET'])
 def getRoutes(request):

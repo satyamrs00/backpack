@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'backpack.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://postgres:postgres@localhost:5432/mysite',
+        default=os.environ.get('DATABASE_URL'),
         conn_max_age=600
     )
 }
@@ -146,6 +146,7 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -200,6 +201,8 @@ CSRF_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 3600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
+
+APPEND_SLASH=False
 
 if os.environ.get('DEVELOPMENT') is not None:
     from .dev_settings import *
