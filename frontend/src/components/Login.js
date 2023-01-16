@@ -10,7 +10,7 @@ import '../App.css'
 export default function Login() {
     const { loginUser } = useContext(AuthContext);
     const myStyle = {
-        backgroundColor: 'white',
+        background:'white',
         fontSize: '.9rem'
     }
     const captchaRef = useRef(null)

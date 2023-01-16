@@ -6,7 +6,7 @@ export default function Carousel(props) {
     return (
         <>
             <div className="carouselDiv">
-                <div id="carouselExampleCaptions" className="carousel slide carousel-dark " data-bs-ride="false" style={{ width: 'calc(85vw)', height: 'calc(12rem + 22vw)', margin: '0 auto' }}>
+                <div id="carouselExampleCaptions" className="carousel slide carousel-dark " data-bs-ride="false" style={{ width: `${props.width}`, height: `${props.height}`, margin: '0 auto' }}>
                     <div className="carousel-indicators">
                         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className="active" aria-current="true"></button>
                         {image.map((element, index) => {
@@ -15,12 +15,12 @@ export default function Carousel(props) {
                     </div>
                     <div className="carousel-inner">
                         <div className="carousel-item active">
-                            <img src={props.images[0]} className="d-block w-100" alt="..." style={{ width: 'calc(85vw)', height: 'calc(12rem + 22vw)', margin: '0 auto' }} />
+                            <img src={props.images[0]} className="d-block w-100" alt="..." style={{ width: `${props.width}`, height: `${props.height}`, margin: '0 auto' }} />
                         </div>
 
                         {image.map((element, index) => {
                             return <div className="carousel-item" key={index}>
-                                <img src={element} className="d-block w-100" alt="..." style={{ width: 'calc(85vw)', height: 'calc(12rem + 22vw)', margin: '0 auto' }} />
+                                <img src={element} className="d-block w-100" alt="..." style={{ width: `${props.width}`, height: `${props.height}`, margin: '0 auto' }} />
                             </div>
                         })}
                     </div>

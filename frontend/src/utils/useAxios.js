@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 import dayjs from "dayjs";
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
-import {baseurl} from '../defination.js'
+import {baseurl} from '../baseurl.js'
 
 const baseURL = baseurl;
 

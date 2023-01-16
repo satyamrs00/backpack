@@ -9,6 +9,10 @@ body {
     background: transparent;
 }
 
+nav li a.dropdown-item:active{
+    background-color: rgb(189, 187, 187);
+    color: black;
+}
 .menuBtn[aria-expanded=false] .fa-caret-up {
     display: none;
 }
@@ -47,4 +51,49 @@ body {
 
 .btnBg:active {
     background-color: rgb(5, 172, 169);
+}
+
+.fileInpBtn::file-selector-button{
+    display: none;
+}
+
+.fileInpBtn{
+    width: calc(2rem + 7vw);
+}
+
+.fileInpStyleBtn{
+    padding: 7px;
+    border: 1px solid rgb(1, 91, 89);
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: rgb(18, 81, 80);
+    color: white;
+}
+
+.fileInpStyleBtn:active{
+    background-color: rgb(1, 121, 119);
+}
+
+.footer-span{
+    /* border: 1px solid rgb(255, 255, 255); */
+    border-radius: 50%;
+    padding: calc(.5rem - .3vw) calc(.5rem);
+    margin: 0 calc(.3rem + .2vw);
+    cursor: pointer;
+    background-color: rgb(232, 232, 232);
+    color: black;
+    box-shadow: 0 0 5px rgb(232, 232, 232);
+}
+/* style={{position:'absolute',right:'calc(1.5rem + 1vw)',bottom:'4rem',background:'rgb(0 152 127)',borderRadius:'50%',padding:'.5rem .7rem',cursor:'pointer */
+#gototoparrow{
+    position: absolute;
+    right: calc(1rem + 1.5vw);
+    bottom:2rem;
+    background-color: rgb(1, 113, 117);
+    border-radius: 50%;
+    padding: calc(.4rem + .1vw) calc(.5rem + .2vw)  calc(.1rem + .2vw) calc(.5rem + .2vw);
+    cursor: pointer;
+}
+#gototoparrow:active{
+    background-color: rgb(1, 89, 92);
 }

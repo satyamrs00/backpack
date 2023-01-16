@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { baseurl } from "../baseurl";
 
 const AuthContext = createContext();
 
@@ -14,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     const history = useNavigate();
 
     const loginUser = async (credential) => {
-        let url='https://backpack-backend.onrender.com/auth/token/'
+        let url=baseurl+'/auth/token/'
         const response = await fetch(url, {
             method: "POST",
             headers: {
@@ -34,7 +35,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const registerUser = async (credential) => {
-        let url='https://backpack-backend.onrender.com/auth/register/'
+        let url=baseurl+'/auth/register/'
         const response = await fetch(url, {
             method: "POST",
             body: credential
@@ -60,7 +61,7 @@ export const AuthProvider = ({ children }) => {
         setAuthTokens,
         registerUser,
         loginUser,
-        logoutUser
+        logoutUser,
     };
 
     useEffect(() => {

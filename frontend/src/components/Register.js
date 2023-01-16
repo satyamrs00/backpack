@@ -13,7 +13,7 @@ export default function Register() {
         backgroundColor: 'white',
         fontSize: '.9rem'
     }
-    
+
     const passRef = useRef(null)
     const pass2Ref = useRef(null)
 
@@ -28,18 +28,17 @@ export default function Register() {
                 pass2Ref.current.style.color = 'red'
             }
             else {
-                pass2Ref.current.style.color = 'black'
+                pass2Ref.current.style.color = 'rgba(1, 90, 72, 0.822)'
             }
         }
     }
 
-    const formData=new FormData()
+    const formData = new FormData()
     const handleSubmit = async (e) => {
         e.preventDefault()
-        for(const ele in credential){
-            formData.append(ele,credential[ele])
+        for (const ele in credential) {
+            formData.append(ele, credential[ele])
         }
-
         registerUser(formData);
     }
 
@@ -70,7 +69,7 @@ export default function Register() {
                             </div>
                             <div className="row">
                                 <div className="mb-4 col-md-6 form-floating">
-                                    <input type={ishide ? 'password' : 'text'} name='password' className="form-control border-0 shadow-sm" required placeholder='Password' onChange={handleOnChange} ref={passRef} pattern='(?=.*\d)(?=.*[a-z]).{8,}' title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
+                                    <input type={ishide ? 'password' : 'text'} name='password' className="form-control border-0 shadow-sm" required placeholder='Password' onChange={handleOnChange} ref={passRef} pattern='(?=.*\d)(?=.*[a-z]).{8,}' title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" />
                                     <label htmlFor="password" className='px-4'>Password *</label>
                                     <img src={ishide ? hideeye : showeye} alt={ishide ? 'show' : 'hide'} title={ishide ? 'show' : 'hide'} style={{ cursor: 'pointer', position: 'absolute', right: '1.5rem', bottom: '1rem', width: '18px' }} onClick={() => setIsHide(e => !e)} />
                                 </div>
@@ -84,23 +83,23 @@ export default function Register() {
                                 <input type="text" name='address' className="form-control border-0 shadow-sm" required placeholder='Address' onChange={handleOnChange} />
                                 <label htmlFor="address">Address *</label>
                             </div>
+                            <div className="mb-4 form-floating">
+                                <input type="text" name='college' className="form-control border-0 shadow-sm" required placeholder='College' onChange={handleOnChange} />
+                                <label htmlFor="college">College *</label>
+                            </div>
                             <div className="row">
                                 <div className="mb-4 col-md-6 form-floating">
-                                    <input type="text" name='college' className="form-control border-0 shadow-sm" required placeholder='College' onChange={handleOnChange} />
-                                    <label htmlFor="college" className='px-4'>College *</label>
-                                </div>
-                                <div className="mb-4 col-md-6 form-floating">
-                                    <input type="number" name='batch' className="form-control border-0 shadow-sm" required placeholder='Batch' min={1950} onChange={handleOnChange} />
+                                    <input type="" name='batch' className="form-control border-0 shadow-sm" required placeholder='Batch' min={1950} onChange={handleOnChange} />
                                     <label htmlFor="batch" className='px-4'>Batch *</label>
                                 </div>
+                                <div className="mb-4 col-md-6 form-floating">
+                                    <input type="text" name='phone' className="form-control border-0 shadow-sm" placeholder='Mobile No.' onChange={handleOnChange} pattern='[0-9]{10}' title='invalid phone number' required />
+                                    <label htmlFor="phone" className='px-4'>Mobile No.</label>
+                                </div>
                             </div>
-                            <div className="mb-4 form-floating">
-                                <input type="text" name='phone' className="form-control border-0 shadow-sm" placeholder='Mobile No.' onChange={handleOnChange} pattern='[0-9]{10}' title='invalid phone number' required/>
-                                <label htmlFor="phone">Mobile No.</label>
-                            </div>
-                            <div className="mb-4 shadow-sm py-2 px-3">
-                                <label htmlFor="profile_pic" style={{ fontSize: 'calc(1rem + .2vw)' }}>Profile * &nbsp; &nbsp;</label>
-                                <input type="file" className='w-50' id="profile_pic" onChange={(e)=>{formData.append('profile_pic',e.target.files[0])}} />
+                            <div className="mb-4 shadow-sm py-4 px-3">
+                                <span>Profile : * </span><label><span className='fileInpStyleBtn ms-1'><i className="fa-solid fa-upload me-1"></i>Upload Profile</span><input type="file" name="profile_pic" className='fileInpBtn ms-2' onChange={(e) => { formData.append('profile_pic', e.target.files[0]) }} required /></label>
+
                             </div>
                             <div className="mb-4 form-check">
                                 <input type="checkbox" className="form-check-input" style={{ cursor: "pointer" }} required />
