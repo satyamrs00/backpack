@@ -1,22 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react'
-import image from './bookbg.jpg'
-import showeye from './showeye.png'
-import hideeye from './hideeye.png'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect, useRef ,useContext} from 'react'
+import image from './images/bookbg.jpg'
+import showeye from './images/showeye.png'
+import hideeye from './images/hideeye.png'
+import { Link} from 'react-router-dom'
 import { loadCaptchaEnginge, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import AuthContext from "../context/AuthContext";
 import '../App.css'
 
 export default function Login() {
+    const { loginUser } = useContext(AuthContext);
     const myStyle = {
-        backgroundColor: 'white',
+        background:'white',
         fontSize: '.9rem'
     }
-
     const captchaRef = useRef(null)
     const captchaParaRef = useRef(null)
-    const [ishide,setIsHide]=useState(true)
-    
-    const [credential, setCredential] = useState({ email: '', password: '' })
+    const [ishide, setIsHide] = useState(true)
+
+    const [credential, setCredential] = useState({})
 
     const handleOnChange = (e) => {
         setCredential({ ...credential, [e.target.name]: e.target.value })
@@ -32,15 +33,7 @@ export default function Login() {
             }, 3000)
             return false
         }
-
-        let url = ''
-        await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(credential)
-        })
-
-        //after submit code
+        loginUser(credential);
     }
 
     useEffect(() => {
@@ -50,26 +43,26 @@ export default function Login() {
     return (
         <>
             <div className="container-fluid d-flex justify-content-center align-items-center p-4" style={{ minHeight: 'calc(30rem + 10vw)' }}>
-                <div className="container row w-80 justify-content-center align-items-center rounded" style={{ ...myStyle, boxShadow: '0 0 20px grey', padding:  'calc(1.5rem + .5vw) calc(.5rem + 2.5vw) calc(1rem) calc(.5rem + 2.5vw)' }}>
-                    <div className={`col-${window.screen.width > 720 ? 6 : 12}`}>
+                <div className="container row w-80 justify-content-center align-items-center rounded" style={{ ...myStyle, boxShadow: '0 0 20px grey', padding: 'calc(1.5rem + .5vw) calc(.5rem + 2.5vw) calc(1rem) calc(.5rem + 2.5vw)' }}>
+                    <div className={`col-${window.screen.width > 900 ? 6 : 12}`}>
                         <h3 className=' pb-4 fst-italic' style={{ fontSize: 'calc(1.3rem + .4vw)' }}>Happy to see you again <span className='fst-normal'>&#x1F60A;</span></h3>
                         <form onSubmit={handleSubmit}>
                             <div className="mb-4 form-floating">
-                                <input type="email" name='email' className="form-control border-0 shadow-sm" required onChange={handleOnChange} placeholder='Email' />
-                                <label htmlFor="email">Email *</label>
+                                <input type="text" name='username' className="form-control border-0 shadow-sm" required onChange={handleOnChange} placeholder='Username' />
+                                <label htmlFor="username">Username *</label>
                             </div>
                             <div className="mb-4 form-floating">
-                                <input type={ishide?'password':'text'} name='password' className="form-control border-0 shadow-sm" required placeholder='Password' onChange={handleOnChange}/>
+                                <input type={ishide ? 'password' : 'text'} name='password' className="form-control border-0 shadow-sm" required placeholder='Password' onChange={handleOnChange} />
                                 <label htmlFor="password">Password *</label>
-                                <img src={ishide?hideeye:showeye}  alt={ishide?'show':'hide'}title={ishide?'show':'hide'} style={{cursor:'pointer',position:'absolute',right:'1.5rem',bottom:'1rem',width:'18px'}} onClick={()=>setIsHide(e=>!e)}/>
+                                <img src={ishide ? hideeye : showeye} alt={ishide ? 'show' : 'hide'} title={ishide ? 'show' : 'hide'} style={{ cursor: 'pointer', position: 'absolute', right: '1.5rem', bottom: '1rem', width: '18px' }} onClick={() => setIsHide(e => !e)} />
                             </div>
-                            <div style={{color:'grey',fontSize:'1rem',marginBottom:'calc(2vw)'}} >
+                            <div style={{ color: 'grey', fontSize: '1rem', marginBottom: 'calc(2vw)' }} >
                                 <LoadCanvasTemplateNoReload />
                                 <label htmlFor="captchaInp" className='mt-2'>Enter security code : &nbsp;</label>
                                 <input type="text" className="form-control shadow-sm border-0" name='captchaInp' style={{ width: 'calc(6rem + 4vw)', padding: '2px 10px', display: 'inline-block' }} ref={captchaRef} required />&nbsp;
                                 <span className='text-danger captchaPara' style={{ visibility: 'hidden' }} ref={captchaParaRef}> Invalid security code</span>
                             </div>
-                            <button type="submit" className="btn shadow-sm" style={{backgroundColor:'rgb(47 250 248)',color:"#161515",borderRadius:"20px",padding:"calc(.3rem + .2vw) calc(1.5rem + .5vw)",cursor:'pointer'}}>Login</button>
+                            <button type="submit" className="btn shadow-sm btnBg" style={{ borderRadius: "20px", padding: "calc(.3rem + .2vw) calc(1.5rem + .5vw)", cursor: 'pointer' }}>Login</button>
                         </form>
                         <p className='mt-4 mb-0 text-center'>Not have an account ? <Link to='/register'>Register</Link></p>
                     </div>
