@@ -14,7 +14,7 @@ class ProductSerializer(serializers.ModelSerializer):
     photo5 = serializers.ImageField(required=False)
     class Meta:
         model = Product
-        fields = ('name','description','owner','current_owner','photo1','photo2','photo3','photo4','photo5','available', 'id')
+        fields = ('name','description','owner','current_owner','available', 'id','photo1','photo2','photo3','photo4','photo5')
         read_only_fields = ('owner','current_owner','available', 'id')
 
     def create(self, validated_data):

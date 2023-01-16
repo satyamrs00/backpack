@@ -51,7 +51,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             address=validated_data['address'],
             phone=validated_data['phone'],
             college=validated_data['college'],
-            profile_pic=validated_data['profile_pic'],
+            profile_pic=validated_data.get('profile_pic', None),
             batch=validated_data['batch'],
             email=validated_data['email'],
             first_name=validated_data['first_name'],
