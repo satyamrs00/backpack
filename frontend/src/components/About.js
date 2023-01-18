@@ -1,11 +1,11 @@
 import React from "react";
-import booksharing from "./images/maa.jpeg";
-import book from "./images/online.jpeg";
-import maa from "./images/booksharing.jpeg"
+import booksharing from "./images/maa2.png";
+import book from "./images/online.png";
+import maa from "./images/maa3.png"
 
 const About = () => {
   return (
-    <div style={{background:'white'}}>
+    <div>
       <div className="container py-4">
         <div className="row py-4 ">
           <div className="col-md-6 align-items-center d-flex" style={{padding:'0 calc(2.5rem)'}}>
@@ -17,7 +17,7 @@ const About = () => {
             </div>
           </div>
           <div className="col-md-6" style={{padding:'0 2.5vw'}}>
-            <img src={booksharing} style={{ width: "100%",height:'20rem'}} className="bg-light" />
+            <img src={booksharing} style={{ width: "100%",height:'20rem'}} />
           </div>
         </div>
       </div>

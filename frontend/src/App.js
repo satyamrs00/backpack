@@ -1,3 +1,4 @@
+import { useEffect, useState, useContext } from 'react';
 import './App.css';
 import {
   BrowserRouter,
@@ -16,19 +17,36 @@ import ContactUs from './components/ContactUs';
 import Profile from './components/Profile';
 import { AuthProvider } from "./context/AuthContext";
 import { ProductProvider } from './context/ProductContext';
+import { ThemeProvider } from './context/ThemeContext';
+import Loading from './components/Loading';
 
 function App() {
-  const myStyle = {
-    background: 'rgb(5 182 195)'
+  const [appTheme, setAppTheme] = useState('light')
+  const toggleAppTheme = () => {
+    if (appTheme === 'light') { setAppTheme('dark') }
+    else setAppTheme('light')
   }
+  const [myStyle, setMyStyle] = useState({ background: 'rgb(5 182 195)' })
 
+  useEffect(() => {
+    if (appTheme === 'dark') { setMyStyle({ background: '#050505' }) }
+    else { setMyStyle({ background: 'rgb(5 182 195)' }) }
+  }, [appTheme])
+
+  const [loading,setLoading]=useState(false)
+  const toggleLoading=(data)=>{
+    setLoading(data)
+  }
+  
   return (
     <>
       <BrowserRouter>
+        <ThemeProvider>
           <AuthProvider>
             <ProductProvider>
-              <Navbar />
-              <div style={{ ...myStyle, minHeight: '100vh', padding: "1rem 0 0 0" }}>
+              <Navbar theme={toggleAppTheme} loading={toggleLoading}/>
+              {loading && <Loading/>}
+              {!loading && <div style={{ ...myStyle, minHeight: '100vh', padding: "1rem 0 0 0" }}>
                 <Routes>
                   <Route exact path='/' element={<Home />} />
                   <Route exact path='/login' element={<Login />} />
@@ -41,8 +59,10 @@ function App() {
                   <Route exact path='*' element={<Pagenotfound />} />
                 </Routes>
               </div>
+              }
             </ProductProvider>
           </AuthProvider>
+        </ThemeProvider>
       </BrowserRouter>
     </>
   );

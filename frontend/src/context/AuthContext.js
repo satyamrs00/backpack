@@ -8,14 +8,15 @@ const AuthContext = createContext();
 export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
-    const [authTokens, setAuthTokens] = useState(() =>localStorage.getItem("authTokens")? JSON.parse(localStorage.getItem("authTokens")): null);
-    const [user, setUser] = useState(() =>localStorage.getItem("authTokens")? jwt_decode(localStorage.getItem("authTokens")): null);
-    const [loading, setLoading] = useState(true);
+    const [authTokens, setAuthTokens] = useState(() => localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null);
+    const [user, setUser] = useState(() => localStorage.getItem("authTokens") ? jwt_decode(localStorage.getItem("authTokens")) : null);
+    const [loading, setLoading] = useState(false);
 
     const history = useNavigate();
 
     const loginUser = async (credential) => {
-        let url=baseurl+'/auth/token/'
+        setLoading(true)
+        let url = baseurl + '/auth/token/'
         const response = await fetch(url, {
             method: "POST",
             headers: {
@@ -24,6 +25,7 @@ export const AuthProvider = ({ children }) => {
             body: JSON.stringify(credential)
         });
         const data = await response.json();
+        setLoading(false)
         if (String(response.status)[0] === 2) {
             setAuthTokens(data);
             setUser(jwt_decode(data.access));
@@ -35,11 +37,13 @@ export const AuthProvider = ({ children }) => {
     };
 
     const registerUser = async (credential) => {
-        let url=baseurl+'/auth/register/'
+        setLoading(true)
+        let url = baseurl + '/auth/register/'
         const response = await fetch(url, {
             method: "POST",
             body: credential
         });
+        setLoading(false)
         if (String(response.status)[0] === 2) {
             history("/login");
         } else {
@@ -54,6 +58,28 @@ export const AuthProvider = ({ children }) => {
         history("/login");
     };
 
+    const profile = async() => {
+        setLoading(true)
+        let url = baseurl + ''
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+
+            })
+            setLoading(false)
+        }
+        catch (err) {
+            setLoading(false)
+            console.log(err);
+        }
+    }
+
+    const checkUser = () => {
+        if (!user) {
+            history('/login')
+        }
+    }
+
     const contextData = {
         user,
         setUser,
@@ -62,6 +88,10 @@ export const AuthProvider = ({ children }) => {
         registerUser,
         loginUser,
         logoutUser,
+        checkUser,
+        profile,
+        loading,
+        setLoading
     };
 
     useEffect(() => {
@@ -73,7 +103,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={contextData}>
-            {loading ? null : children}
+            {children}
         </AuthContext.Provider>
     );
 };

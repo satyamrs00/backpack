@@ -8,11 +8,15 @@ body {
     width: 0;
     background: transparent;
 }
-
-nav li a.dropdown-item:active{
-    background-color: rgb(189, 187, 187);
-    color: black;
+nav li a.dropdown-item:hover{
+    background-color: rgb(155, 155, 155);
 }
+nav li a.dropdown-item:active{
+    background-color: rgb(110, 110, 110);
+    color: black;   
+}
+
+/* //navbar dropdown btn */
 .menuBtn[aria-expanded=false] .fa-caret-up {
     display: none;
 }
@@ -21,7 +25,8 @@ nav li a.dropdown-item:active{
     display: none;
 }
 
-.form-floating>input {
+/* //Forms */
+.form-floating input{
     font-size: calc(1.1rem - .1vw);
     color: rgba(1, 90, 72, 0.822);
 }
@@ -74,6 +79,7 @@ nav li a.dropdown-item:active{
     background-color: rgb(1, 121, 119);
 }
 
+/* //footer */
 .footer-span{
     /* border: 1px solid rgb(255, 255, 255); */
     border-radius: 50%;

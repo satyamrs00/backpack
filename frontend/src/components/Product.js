@@ -1,25 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react'
 import AuthContext from "../context/AuthContext";
 import ProductContext from '../context/ProductContext';
-import useAxios from '../utils/useAxios';
-import { useNavigate } from 'react-router-dom';
 import ProductItem from './ProductItem'
 import Modal from 'react-bootstrap/Modal';
 import '../App.css'
+import ThemeContext from '../context/ThemeContext';
 
 export default function Product() {
-    const navigate = useNavigate()
-    // const api = useAxios()
-    let { user } = useContext(AuthContext);
-    let { getallproducts } = useContext(ProductContext)
-    // useEffect(() => {
-    //     if (!user) {navigate('/login')}
-    //     // eslint-disable-next-line
-    // }, [])
+    const { checkUser } = useContext(AuthContext)
+    useEffect(() => { checkUser() }, [])
 
-    const myStyle = {
-        backgroundColor: 'white'
-    }
+    let { theme, myStyle, inputStyle } = useContext(ThemeContext)
+    let { getallproducts } = useContext(ProductContext)
+
     const [data, setData] = useState([])
 
     //search feature
@@ -44,25 +37,25 @@ export default function Product() {
         <>
             {/* Modal */}
             <Modal show={show} onHide={handleClose} style={{ backdropFilter: 'blur(2px)', overflow: 'visible' }}>
-                <Modal.Header closeButton style={{ height: '3.5rem' }}>
-                    <Modal.Title style={{ textShadow: '1px 1px grey', color: '#404040' }}>Send request for book</Modal.Title>
+                <Modal.Header closeButton style={{ height: '3.5rem', ...inputStyle }}>
+                    <Modal.Title style={{ textShadow: '1px 1px grey' }} className={`text-${theme === 'light' ? 'dark' : 'light'}`}>Send request for book</Modal.Title>
                 </Modal.Header>
                 <form onSubmit={(e) => { e.preventDefault() }}>
-                    <Modal.Body style={{ padding: '1.5rem' }}>
+                    <Modal.Body style={{ padding: '1.5rem', ...inputStyle }}>
                         <div className="mb-3">
-                            <label htmlFor="title" className="form-label" style={{ textShadow: '1px 0px grey' }}>Title of Book</label>
-                            <input type="text" className="form-control shadow-sm" id="title" />
+                            <label htmlFor="title" className={`form-label text-${theme === 'light' ? 'dark' : 'light'}`} style={{ textShadow: '1px 0px grey' }}>Title of Book</label>
+                            <input type="text" className="form-control shadow-sm" id="title" style={{ ...myStyle }} />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="author" className="form-label" style={{ textShadow: '1px 0px grey' }}>Author of Book</label>
-                            <input type="text" className="form-control shadow-sm" id="author" />
+                            <label htmlFor="author" className={`form-label text-${theme === 'light' ? 'dark' : 'light'}`} style={{ textShadow: '1px 0px grey' }}>Author of Book</label>
+                            <input type="text" className="form-control shadow-sm" id="author" style={{ ...myStyle }} />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="moreinfo" className="form-label" style={{ textShadow: '1px 0px grey' }}>Additional information of Book</label>
-                            <textarea className="form-control shadow-sm" id="moreinfo" style={{ height: 'calc(5rem + 3vw)' }} />
+                            <label htmlFor="moreinfo" className={`form-label text-${theme === 'light' ? 'dark' : 'light'}`} style={{ textShadow: '1px 0px grey' }}>Additional information of Book</label>
+                            <textarea className="form-control shadow-sm" id="moreinfo" style={{ height: 'calc(5rem + 3vw)', ...myStyle }} />
                         </div>
                     </Modal.Body>
-                    <Modal.Footer>
+                    <Modal.Footer style={{ ...inputStyle }}>
                         <button className='btn btnBg shadow-sm align-items-center d-flex justify-content-center' onClick={handleClose} style={{ width: 'calc(4rem + 1vw)', height: 'calc(2rem + .2vw)' }}>
                             Close
                         </button>
@@ -73,10 +66,10 @@ export default function Product() {
                 </form>
             </Modal>
             {/* onKeyUp={(e) => { if (e.key === 'Enter') { handleSearch() } }} */}
-            <div style={{ ...myStyle, margin: 'calc(1rem + 2vw) calc(.1rem + 2vw)', boxShadow: '0 0 15px grey' }}>
+            <div style={{ ...myStyle, margin: 'calc(1rem + 2vw) calc(.1rem + 2vw)', boxShadow: '0 0 15px grey', borderRadius: "5px" }}>
                 <div className="d-flex justify-content-center">
                     <div style={{ width: 'calc(10rem + 30vw)', position: 'relative' }}>
-                        <input type="text" name="search" id="search" className='mb-2 mt-4' style={{borderRadius:'20px', color: '#6a6a6a', width: '100%', border: "none", outline: 'none', borderBottom: "2px solid grey", boxShadow: "0 0 5px grey", fontSize: 'calc(1rem + .1vw)', padding: '.4rem 1.2rem', fontFamily: 'serif' }} placeholder='Search here' onChange={(e) => { setSearchQuery(e.target.value)}} />
+                        <input type="text" name="search" id="search" className='mb-2 mt-4' style={{ borderRadius: '20px', color: '#6a6a6a', width: '100%', border: "none", outline: 'none', borderBottom: "2px solid grey", boxShadow: "0 0 5px grey", fontSize: 'calc(1rem + .1vw)', padding: '.4rem 1.2rem', fontFamily: 'serif' }} placeholder='Search here' onChange={(e) => { setSearchQuery(e.target.value) }} />
                         <span style={{ position: "absolute", right: '.2vw', top: 'calc(1.4rem + .1vw)' }}><button className='btn shadow-none' onClick={handleClear} title='clear'><i className="fa-solid fa-xmark fa-lg"></i></button></span>
                     </div>
                 </div>
