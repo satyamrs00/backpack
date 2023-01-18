@@ -206,3 +206,5 @@ APPEND_SLASH=False
 
 if os.environ.get('DEVELOPMENT') is not None:
     from .dev_settings import *
+if os.environ.get('DEBUG') is not None:
+    DEBUG = True
