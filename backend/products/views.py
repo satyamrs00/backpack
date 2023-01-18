@@ -23,7 +23,7 @@ class IsCurrentOwner(BasePermission):
 
 class ProductViewSet(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
-    
+
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     parser_classes = (MultiPartParser, FormParser)
@@ -112,10 +112,9 @@ class AcceptOrRejectRequest(generics.GenericAPIView, UpdateModelMixin):
         return self.update(request, *args, **kwargs)
 
 class Profile(generics.GenericAPIView, ListModelMixin):
-   
-
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated]
    
 
     def get(self, request, *args, **kwargs):
