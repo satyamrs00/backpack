@@ -19,7 +19,6 @@ export const AuthProvider = ({ children }) => {
         setLoading(true)
         let url = baseurl + 'auth/token/'
         const response=await axios.post(url,credential)
-        setLoading(false)
         if (response.status=== 200) {
             setAuthTokens(response.data);
             setUser(jwt_decode(response.data.access));
@@ -28,18 +27,20 @@ export const AuthProvider = ({ children }) => {
         } else {
             alert("Something went wrong!");
         }
+        console.log('login');
+        setLoading(false)
     };
 
     const registerUser = async (credential) => {
         setLoading(true)
         let url = baseurl + 'auth/register/'
         const response=await axios.post(url,credential)
-        setLoading(false)
         if (response.status === 201) {
             history("/login");
         } else {
             alert("Something went wrong!");
         }
+        setLoading(false)
     };
 
     const logoutUser = () => {
@@ -72,7 +73,6 @@ export const AuthProvider = ({ children }) => {
         if (authTokens) {
             setUser(jwt_decode(authTokens.access));
         }
-        setLoading(false);
     }, [authTokens, loading]);
 
     return (

@@ -1,16 +1,17 @@
-import React, { useState, useEffect, useRef ,useContext} from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import image from './images/bookbg2.png'
 import showeye from './images/showeye.png'
 import hideeye from './images/hideeye.png'
-import { Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { loadCaptchaEnginge, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import AuthContext from "../context/AuthContext";
 import ThemeContext from '../context/ThemeContext'
 import '../App.css'
+import Loading from './Loading'
 
 export default function Login() {
-    const { loginUser } = useContext(AuthContext);
-    const {theme,myStyle,inputStyle}=useContext(ThemeContext)
+    const { loginUser, loading } = useContext(AuthContext);
+    const { theme, myStyle, inputStyle } = useContext(ThemeContext)
 
     const captchaRef = useRef(null)
     const captchaParaRef = useRef(null)
@@ -35,41 +36,46 @@ export default function Login() {
         loginUser(credential);
     }
 
+    useEffect(()=>{
+    },[loading])
     useEffect(() => {
         loadCaptchaEnginge(5);
     }, [])
 
     return (
         <>
-            <div className="container-fluid d-flex justify-content-center align-items-center p-4" style={{ minHeight: 'calc(30rem + 10vw)' }}>
-                <div className="container row w-80 justify-content-center align-items-center rounded" style={{ ...myStyle, boxShadow: '0 0 20px grey', padding: 'calc(1.5rem + 1vw) calc(.5rem + 2.5vw) calc(1rem) calc(.5rem + 2.5vw)' }}>
-                    <div className={`col-${window.screen.width > 900 ? 6 : 12}`}>
-                        <h3 className=' pb-4 fst-italic' style={{ fontSize: 'calc(1.3rem + .4vw)' }}>Happy to see you again <span className='fst-normal'>&#x1F60A;</span></h3>
-                        <form onSubmit={handleSubmit}>
-                            <div className="mb-4 form-floating">
-                                <input type="text" name='username' className="form-control border-0 shadow-sm" required onChange={handleOnChange} placeholder='Username' style={{...inputStyle}}/>
-                                <label htmlFor="username">Username *</label>
-                            </div>
-                            <div className="mb-4 form-floating">
-                                <input type={ishide ? 'password' : 'text'} name='password' className="form-control border-0 shadow-sm" required placeholder='Password' onChange={handleOnChange} style={{...inputStyle}}/>
-                                <label htmlFor="password">Password *</label>
-                                <img src={ishide ? hideeye : showeye} alt={ishide ? 'show' : 'hide'} title={ishide ? 'show' : 'hide'} style={{ cursor: 'pointer', position: 'absolute', right: '1.5rem', bottom: '1rem', width: '18px' }} onClick={() => setIsHide(e => !e)} />
-                            </div>
-                            <div style={{ fontSize: '1rem', marginBottom: 'calc(2vw)' }} >
-                                <LoadCanvasTemplateNoReload/>
-                                <label htmlFor="captchaInp" className='mt-2'>Enter security code : &nbsp;</label>
-                                <input type="text" className="form-control shadow-sm border-0" name='captchaInp' style={{ width: 'calc(6rem + 4vw)', padding: '5px 10px', display: 'inline-block',...inputStyle }} ref={captchaRef} required />&nbsp;
-                                <span className='text-danger captchaPara' style={{ visibility: 'hidden' }} ref={captchaParaRef}> Invalid security code</span>
-                            </div>
-                            <button type="submit" className="btn shadow-sm btnBg" style={{ borderRadius: "20px", padding: "calc(.3rem + .2vw) calc(1.5rem + .5vw)", cursor: 'pointer' }}>Login</button>
-                        </form>
-                        <p className='mt-4 mb-0 text-center'>Not have an account ? <Link to='/register'>Register</Link></p>
-                    </div>
-                    <div className={`col-${window.screen.width > 720 ? 6 : '0 d-none'} d-flex justify-content-center`}>
-                        <img src={image} alt="" id='sideimage' style={{width:'60%',filter:`drop-shadow(7px 5px 4px ${theme==='light'?'#303030':'rgb(5 150 152)'})`}} />
+            {loading && <Loading />}
+            {!loading &&
+                <div className="container-fluid d-flex justify-content-center align-items-center p-4" style={{ minHeight: 'calc(30rem + 10vw)' }}>
+                    <div className="container row w-80 justify-content-center align-items-center rounded" style={{ ...myStyle, boxShadow: '0 0 20px grey', padding: 'calc(1.5rem + 1vw) calc(.5rem + 2.5vw) calc(1rem) calc(.5rem + 2.5vw)' }}>
+                        <div className={`col-${window.screen.width > 900 ? 6 : 12}`}>
+                            <h3 className=' pb-4 fst-italic' style={{ fontSize: 'calc(1.3rem + .4vw)' }}>Happy to see you again <span className='fst-normal'>&#x1F60A;</span></h3>
+                            <form onSubmit={handleSubmit}>
+                                <div className="mb-4 form-floating">
+                                    <input type="text" name='username' className="form-control border-0 shadow-sm" required onChange={handleOnChange} placeholder='Username' style={{ ...inputStyle }} />
+                                    <label htmlFor="username">Username *</label>
+                                </div>
+                                <div className="mb-4 form-floating">
+                                    <input type={ishide ? 'password' : 'text'} name='password' className="form-control border-0 shadow-sm" required placeholder='Password' onChange={handleOnChange} style={{ ...inputStyle }} />
+                                    <label htmlFor="password">Password *</label>
+                                    <img src={ishide ? hideeye : showeye} alt={ishide ? 'show' : 'hide'} title={ishide ? 'show' : 'hide'} style={{ cursor: 'pointer', position: 'absolute', right: '1.5rem', bottom: '1rem', width: '18px' }} onClick={() => setIsHide(e => !e)} />
+                                </div>
+                                <div style={{ fontSize: '1rem', marginBottom: 'calc(2vw)' }} >
+                                    <LoadCanvasTemplateNoReload />
+                                    <label htmlFor="captchaInp" className='mt-2'>Enter security code : &nbsp;</label>
+                                    <input type="text" className="form-control shadow-sm border-0" name='captchaInp' style={{ width: 'calc(6rem + 4vw)', padding: '5px 10px', display: 'inline-block', ...inputStyle }} ref={captchaRef} required />&nbsp;
+                                    <span className='text-danger captchaPara' style={{ visibility: 'hidden' }} ref={captchaParaRef}> Invalid security code</span>
+                                </div>
+                                <button type="submit" className="btn shadow-sm btnBg" style={{ borderRadius: "20px", padding: "calc(.3rem + .2vw) calc(1.5rem + .5vw)", cursor: 'pointer' }}>Login</button>
+                            </form>
+                            <p className='mt-4 mb-0 text-center'>Not have an account ? <Link to='/register'>Register</Link></p>
+                        </div>
+                        <div className={`col-${window.screen.width > 720 ? 6 : '0 d-none'} d-flex justify-content-center`}>
+                            <img src={image} alt="" id='sideimage' style={{ width: '60%', filter: `drop-shadow(7px 5px 4px ${theme === 'light' ? '#303030' : 'rgb(5 150 152)'})` }} />
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         </>
     )
 }

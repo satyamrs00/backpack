@@ -58,12 +58,13 @@ nav li a.dropdown-item:active{
     background-color: rgb(5, 172, 169);
 }
 
+/* // Input image */
 .fileInpBtn::file-selector-button{
     display: none;
 }
 
 .fileInpBtn{
-    width: calc(2rem + 7vw);
+    width: calc(.5rem + 8vw);
 }
 
 .fileInpStyleBtn{

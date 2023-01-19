@@ -3,24 +3,15 @@ import { Link, useLocation } from 'react-router-dom'
 import AuthContext from "../context/AuthContext";
 import ThemeContext from '../context/ThemeContext'
 import Modal from 'react-bootstrap/Modal';
-import image from './images/bookbg.png'
 import sun from './images/sun.png'
 import moon from './images/moon.png'
 import '../App.css'
 import ProductContext from '../context/ProductContext';
-import { baseurl } from '../baseurl';
 
 export default function Navbar(props) {
     const { theme, toggleTheme } = useContext(ThemeContext)
-    const { user, logoutUser,loading } = useContext(AuthContext)
-    const {profileData,profile}=useContext(ProductContext)
-
-    useEffect(()=>{
-        props.loading(loading)
-    },[loading])
-    useEffect(()=>{
-        profile()
-    },[])
+    const { user, logoutUser } = useContext(AuthContext)
+    const {profileData}=useContext(ProductContext)
 
     const location = useLocation()
     if (location.pathname === '/') document.title = 'BackPack - Home'
