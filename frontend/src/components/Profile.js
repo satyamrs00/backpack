@@ -43,7 +43,7 @@ const Profile = () => {
     ((profileData.request_to_me) ? profileData.request_to_me : []).map((ele, index) => {
       if (ele.status === 'pending') { setPendingRequestsToMe(pendingRequestsToMe + 1) }
     })
-  }, [])
+  }, [profileData])
 
   //Modals function
   const [show, setShow] = useState(false);
@@ -53,37 +53,34 @@ const Profile = () => {
   return (
     <>
       {/* Modal */}
-      {loading && <Loading />}
-      {!loading &&
-        <Modal show={show} onHide={handleClose} style={{ backdropFilter: 'blur(2px)', overflow: 'visible' }}>
-          <ModalHeader closeButton style={{ ...myStyle }}><h3>All requests for your books</h3></ModalHeader>
-          <Modal.Body style={{ padding: '1.5rem', ...myStyle }}>
-            {pendingRequestsToMe === 0 && <p className="fs-5 fst-italic">No request now</p>}
-            {
-              ((profileData.request_to_me) ? profileData.request_to_me : []).map((ele, index) => {
-                if (ele.status === 'pending') {
-                  return <div key={index} className="border border-light py-2 px-3 rounded mb-4" style={{ background: 'lightgrey' }}>
-                    <h5>A new request for your "{ele.product.name}" book</h5>
-                    <h6>Requesting User Details</h6>
-                    <p className="p-0 m-0">Name : {ele.fromOwner.first_name} {ele.fromOwner.last_name}</p>
-                    <p className="p-0 m-0">Username: {ele.fromOwner.username}</p>
-                    <p className="p-0 m-0">Batch : {ele.fromOwner.batch}</p>
-                    <p className="p-0 m-0">Email : {ele.fromOwner.email}</p>
-                    <p className="p-0 m-0">Address : {ele.fromOwner.address}</p>
-                    <div className="d-flex justify-content-end">
-                      <button className='btn btn-success shadow-sm me-2' onClick={() => { handleAcceptReject(); handleAcceptReject(ele.id, 'accepted'); }}>Accept</button>
-                      <button className='btn btn-danger shadow-sm' onClick={() => { handleAcceptReject(); handleAcceptReject(ele.id, 'rejected'); }}>Decline</button>
-                    </div>
+      <Modal show={show} onHide={handleClose} style={{ backdropFilter: 'blur(2px)', overflow: 'visible' }}>
+        <ModalHeader closeButton style={{ ...myStyle }}><h3>All requests for your books</h3></ModalHeader>
+        <Modal.Body style={{ padding: '1.5rem', ...myStyle }}>
+          {pendingRequestsToMe === 0 && <p className="fs-5 fst-italic">No request now</p>}
+          {
+            ((profileData.request_to_me) ? profileData.request_to_me : []).map((ele, index) => {
+              if (ele.status === 'pending') {
+                return <div key={index} className="border border-light py-2 px-3 rounded mb-4" style={{ background: 'lightgrey' }}>
+                  <h5>A new request for your "{ele.product.name}" book</h5>
+                  <h6>Requesting User Details</h6>
+                  <p className="p-0 m-0">Name : {ele.fromOwner.first_name} {ele.fromOwner.last_name}</p>
+                  <p className="p-0 m-0">Username: {ele.fromOwner.username}</p>
+                  <p className="p-0 m-0">Batch : {ele.fromOwner.batch}</p>
+                  <p className="p-0 m-0">Email : {ele.fromOwner.email}</p>
+                  <p className="p-0 m-0">Address : {ele.fromOwner.address}</p>
+                  <div className="d-flex justify-content-end">
+                    <button className='btn btn-success shadow-sm me-2' onClick={() => {handleClose(); handleAcceptReject(ele.id, 'accepted'); }}>Accept</button>
+                    <button className='btn btn-danger shadow-sm' onClick={() => {handleClose(); handleAcceptReject(ele.id, 'rejected'); }}>Decline</button>
                   </div>
-                }
-              })
-            }
-          </Modal.Body>
-        </Modal>
-      }
+                </div>
+              }
+            })
+          }
+        </Modal.Body>
+      </Modal>
 
-      {loading && <Loading />}
-      {!loading &&
+      {(loading || Object.keys(profileData).length===0) && <Loading />}
+      {(!loading && Object.keys(profileData).length!==0) &&
         <div style={{ ...myStyle, padding: '2rem 2rem', marginTop: '-1rem' }}>
           <div className="row w-100">
             <div className={`col-md-5 ${window.screen.width > 992 ? 'd-flex justify-content-center' : ''}`}>
@@ -110,9 +107,9 @@ const Profile = () => {
             </div>
             <div className="col-md-7">
               <div className="d-flex justify-content-end">
-                <button className="btn position-relative shadow-none" onClick={handleShow} style={{ backgroundColor: "orange", fontWeight: '500', color: '#404040' }} >New Requests {pendingRequestsToMe > 0 && <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                <button className="btn position-relative shadow-none" onClick={handleShow} style={{ backgroundColor: "orange", fontWeight: '500', color: '#404040' }} >New Requests {pendingRequestsToMe > 0 && <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                   {pendingRequestsToMe}
-                  <span class="visually-hidden">unread messages</span>
+                  <span className="visually-hidden">unread messages</span>
                 </span>}</button>
               </div>
             </div>
