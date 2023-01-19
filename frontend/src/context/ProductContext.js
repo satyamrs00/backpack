@@ -25,9 +25,6 @@ export const ProductProvider = ({ children }) => {
 
     const registerBook = async (details) => {
         setLoading(true)
-        for (var pair of details.entries()) {
-            console.log(pair[0]+ ' - ' + pair[1]); 
-        }
         let url = baseurl + 'api/products/'
         try {
             const response = await api.post(url, details)
