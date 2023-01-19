@@ -14,7 +14,7 @@ export default function Register() {
     const passRef = useRef(null)
     const pass2Ref = useRef(null)
 
-    const [credential, setCredential] = useState({ first_name: '', last_name: '', username: '', email: '', password: '', password2: '', address: '', college: '', batch: '', phone: '' })
+    const [credential, setCredential] = useState({ first_name: 'dhruv', last_name: 'rajpoot', username: 'dhruv', email: '1@1.com', password: 'Dhruv123', password2: 'Dhruv123', address: 'bhopall', college: 'IIIT', batch: '2025', phone: '4565' })
 
     const [ishide, setIsHide] = useState(true)
 
@@ -48,57 +48,57 @@ export default function Register() {
                         <form onSubmit={handleSubmit}>
                             <div className="row">
                                 <div className="mb-4 col-md-6 form-floating">
-                                    <input type="text" name='first_name' className="form-control border-0 shadow-sm" required placeholder='First name' onChange={handleOnChange} style={{...inputStyle}}/>
+                                    <input type="text" name='first_name' className="form-control border-0 shadow-sm"  placeholder='First name' onChange={handleOnChange} style={{...inputStyle}}/>
                                     <label htmlFor="first_name" className='px-4'>First Name *</label>
                                 </div>
                                 <div className="mb-4 col-md-6 form-floating">
-                                    <input type="text" name='last_name' className="form-control border-0 shadow-sm" required placeholder='Last name' onChange={handleOnChange} style={{...inputStyle}}/>
+                                    <input type="text" name='last_name' className="form-control border-0 shadow-sm"  placeholder='Last name' onChange={handleOnChange} style={{...inputStyle}}/>
                                     <label htmlFor="last_name" className='px-4'>Last Name *</label>
                                 </div>
                             </div>
                             <div className="mb-4 form-floating">
-                                <input type="text" name='username' className="form-control border-0 shadow-sm" required placeholder='User name' onChange={handleOnChange} style={{...inputStyle}}/>
+                                <input type="text" name='username' className="form-control border-0 shadow-sm"  placeholder='User name' onChange={handleOnChange} style={{...inputStyle}}/>
                                 <label htmlFor="username">User Name *</label>
                             </div>
                             <div className="mb-4 form-floating">
-                                <input type="email" name='email' className="form-control border-0 shadow-sm" required placeholder='Email' onChange={handleOnChange} style={{...inputStyle}}/>
+                                <input type="email" name='email' className="form-control border-0 shadow-sm"  placeholder='Email' onChange={handleOnChange} style={{...inputStyle}}/>
                                 <label htmlFor="email">Email *</label>
                             </div>
                             <div className="row">
                                 <div className="mb-4 col-md-6 form-floating">
-                                    <input type={ishide ? 'password' : 'text'} name='password' className="form-control border-0 shadow-sm" required placeholder='Password' onChange={handleOnChange} ref={passRef} pattern='(?=.*\d)(?=.*[a-z]).{8,}' title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" style={{...inputStyle}}/>
+                                    <input type={ishide ? 'password' : 'text'} name='password' className="form-control border-0 shadow-sm"  placeholder='Password' onChange={handleOnChange} ref={passRef} pattern='(?=.*\d)(?=.*[a-z]).{8,}' title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" style={{...inputStyle}}/>
                                     <label htmlFor="password" className='px-4'>Password *</label>
                                     <img src={ishide ? hideeye : showeye} alt={ishide ? 'show' : 'hide'} title={ishide ? 'show' : 'hide'} style={{ cursor: 'pointer', position: 'absolute', right: '1.5rem', bottom: '1rem', width: '18px' }} onClick={() => setIsHide(e => !e)} />
                                 </div>
                                 <div className="mb-4 col-md-6 form-floating">
-                                    <input type={ishide ? 'password' : 'text'} name='password2' className="form-control border-0 shadow-sm" required placeholder='Confirm Password' onChange={handleOnChange} ref={pass2Ref} minLength={8} style={{...inputStyle}}/>
+                                    <input type={ishide ? 'password' : 'text'} name='password2' className="form-control border-0 shadow-sm"  placeholder='Confirm Password' onChange={handleOnChange} ref={pass2Ref} minLength={8} style={{...inputStyle}}/>
                                     <label htmlFor="password2" className='px-4'>Confirm Password *</label>
                                     <img src={ishide ? hideeye : showeye} alt={ishide ? 'show' : 'hide'} title={ishide ? 'show' : 'hide'} style={{ cursor: 'pointer', position: 'absolute', right: '1.5rem', bottom: '1rem', width: '18px' }} onClick={() => setIsHide(e => !e)} />
                                 </div>
                             </div>
                             <div className="mb-4 form-floating">
-                                <input type="text" name='address' className="form-control border-0 shadow-sm" required placeholder='Address' onChange={handleOnChange} style={{...inputStyle}}/>
+                                <input type="text" name='address' className="form-control border-0 shadow-sm"  placeholder='Address' onChange={handleOnChange} style={{...inputStyle}}/>
                                 <label htmlFor="address">Address *</label>
                             </div>
                             <div className="mb-4 form-floating">
-                                <input type="text" name='college' className="form-control border-0 shadow-sm" required placeholder='College' onChange={handleOnChange} style={{...inputStyle}}/>
+                                <input type="text" name='college' className="form-control border-0 shadow-sm"  placeholder='College' onChange={handleOnChange} style={{...inputStyle}}/>
                                 <label htmlFor="college">College *</label>
                             </div>
                             <div className="row">
                                 <div className="mb-4 col-md-6 form-floating">
-                                    <input type="" name='batch' className="form-control border-0 shadow-sm" required placeholder='Batch' min={1950} onChange={handleOnChange} style={{...inputStyle}}/>
+                                    <input type="" name='batch' className="form-control border-0 shadow-sm"  placeholder='Batch' min={1950} onChange={handleOnChange} style={{...inputStyle}}/>
                                     <label htmlFor="batch" className='px-4'>Batch *</label>
                                 </div>
                                 <div className="mb-4 col-md-6 form-floating">
-                                    <input type="text" name='phone' className="form-control border-0 shadow-sm" placeholder='Mobile No.' onChange={handleOnChange} pattern='[0-9]{10}' title='invalid phone number' required style={{...inputStyle}}/>
+                                    <input type="text" name='phone' className="form-control border-0 shadow-sm" placeholder='Mobile No.' onChange={handleOnChange} pattern='[0-9]{10}' title='invalid phone number'  style={{...inputStyle}}/>
                                     <label htmlFor="phone" className='px-4'>Mobile No.</label>
                                 </div>
                             </div>
                             <div className={`mb-4 shadow-sm py-4 px-3 text-${theme==='light'?'dark':'light'}`} style={{...inputStyle}}>
-                                <span>Profile : * </span><label><span className='fileInpStyleBtn ms-1'><i className="fa-solid fa-upload me-1"></i>Upload Profile</span><input type="file" name="profile_pic" className='fileInpBtn ms-2' onChange={(e) => { formData.append('profile_pic', e.target.files[0]) }} required /></label>
+                                <span>Profile : * </span><label><span className='fileInpStyleBtn ms-1'><i className="fa-solid fa-upload me-1"></i>Upload Profile</span><input type="file" name="profile_pic" className='fileInpBtn ms-2' onChange={(e) => { formData.append('profile_pic', e.target.files[0]) }}  /></label>
                             </div>
                             <div className="mb-4 form-check">
-                                <input type="checkbox" className="form-check-input shadow-none" style={{ cursor: "pointer"}} required/>
+                                <input type="checkbox" className="form-check-input shadow-none" style={{ cursor: "pointer"}} />
                                 <label className="form-check-label" htmlFor="exampleCheck1">I agree to Terms & Conditions.</label>
                             </div>
                             <button type="submit" className="btn shadow-sm btnBg" disabled={credential.password === '' || credential.password !== credential.password2} style={{ borderRadius: "20px", padding: "calc(.3rem + .2vw) calc(1.5rem + .5vw)", cursor: 'pointer' }}>Register</button>
