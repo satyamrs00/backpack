@@ -3,6 +3,7 @@ import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { baseurl } from "../baseurl";
 import useAxios from "../utils/useAxios";
+import axios from "axios";
 
 const AuthContext = createContext();
 export default AuthContext;
@@ -16,20 +17,22 @@ export const AuthProvider = ({ children }) => {
 
     const loginUser = async (credential) => {
         setLoading(true)
-        let url = baseurl + '/auth/token/'
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(credential)
-        });
-        const data = await response.json();
+        let url = baseurl + 'auth/token/'
+        // const response = await fetch(url, {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify(credential)
+        // });
+        const response=await axios.post(url,credential)
+        // const data = await response.json();
         setLoading(false)
-        if (String(response.status)[0] === 2) {
-            setAuthTokens(data);
-            setUser(jwt_decode(data.access));
-            localStorage.setItem("authTokens", JSON.stringify(data));
+        console.log(response)
+        if (response.status=== 200) {
+            setAuthTokens(response.data);
+            setUser(jwt_decode(response.data.access));
+            localStorage.setItem("authTokens", JSON.stringify(response.data));
             history("/");
         } else {
             alert("Something went wrong!");
@@ -38,13 +41,19 @@ export const AuthProvider = ({ children }) => {
 
     const registerUser = async (credential) => {
         setLoading(true)
-        let url = baseurl + '/auth/register/'
-        const response = await fetch(url, {
-            method: "POST",
-            body: credential
-        });
+        let url = baseurl + 'auth/register/'
+        // const response = await fetch(url, {
+        //     method: "POST",
+        //     body: credential,
+        //     headers:{
+        //         'Content-Type':'multipart/form-data'
+        //     },
+        // });
+
+        const response=await axios.post(url,credential)
         setLoading(false)
-        if (String(response.status)[0] === 2) {
+        console.log(response);
+        if (response.status === 201) {
             history("/login");
         } else {
             alert("Something went wrong!");
@@ -76,7 +85,7 @@ export const AuthProvider = ({ children }) => {
         loading,
         setLoading
     };
-    
+
     useEffect(() => {
         if (authTokens) {
             setUser(jwt_decode(authTokens.access));
