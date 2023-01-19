@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 DEBUG = True
 ALLOWED_HOSTS = ['*']
@@ -22,3 +23,6 @@ STATIC_ROOT = None
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "backpack_media")
+DEFAULT_FILE_STORAGE='django.core.files.storage.FileSystemStorage'
