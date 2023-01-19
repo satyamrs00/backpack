@@ -147,7 +147,7 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "backpack_media")
 
 CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
 DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_ALL_ORIGINS = True
