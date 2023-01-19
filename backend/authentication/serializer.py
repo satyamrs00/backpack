@@ -5,9 +5,11 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.core.files.uploadhandler import MemoryFileUploadHandler
 from django.core.files.storage import default_storage
-
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    permission_classes = (AllowAny,)
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
