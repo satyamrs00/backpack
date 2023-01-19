@@ -27,6 +27,7 @@ const Profile = () => {
 
   const formData = new FormData()
   const handleAcceptReject = async (id, status) => {
+    setPendingRequestsToMe(pendingRequestsToMe-1)
     let url = baseurl + 'api/accept-or-reject-request/'
     formData.append('transaction', id)
     formData.append('status', status)
