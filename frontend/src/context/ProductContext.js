@@ -1,16 +1,21 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { baseurl } from "../baseurl";
+import useAxios from "../utils/useAxios";
 import AuthContext from "./AuthContext";
 const ProductContext = createContext()
 export default ProductContext;
 export const ProductProvider = ({ children }) => {
-    const { loading, setLoading } = useContext(AuthContext)
+    const { loading, setLoading,authTokens } = useContext(AuthContext)
+    const api=useAxios()
     const getallproducts = async (filterQuery) => {
         setLoading(true)
         try {
-            let url = baseurl + '/api/products'
+            let url = baseurl + 'api/products/'
             const response = await fetch(url, {
-
+                method:'GET',
+                headers:{
+                    Authorization:'Bearer '+authTokens.access
+                }
             })
             const filterResponse = response.filter((ele) => { return ele.name.toLowerCase().includes(filterQuery.toLowerCase()) })
             setLoading(false)
@@ -24,11 +29,14 @@ export const ProductProvider = ({ children }) => {
 
     const registerBook = async (details) => {
         setLoading(true)
-        let url = baseurl + ''
+        let url = baseurl + 'api/products/'
         try {
             const response = await fetch(url, {
                 method: 'POST',
-                body: details
+                body: details,
+                headers:{
+                    Authorization:'Bearer '+authTokens.access
+                }
             })
             setLoading(false)
         }
@@ -44,7 +52,10 @@ export const ProductProvider = ({ children }) => {
         let url = baseurl + `api/products/${id}/`
         try {
             const response = await fetch(url, {
-
+                method:'GET',
+                headers:{
+                    Authorization:'Bearer '+authTokens.access
+                }
             })
             setLoading(false)
             return response
@@ -55,9 +66,29 @@ export const ProductProvider = ({ children }) => {
         }
     }
 
+    const [profileData,setProfileData]=useState({})
+    const profile = async() => {
+        setLoading(true)
+        let url = baseurl + 'api/profile/'
+        try {
+            const response = await api.get(url)
+            setProfileData(response.data)
+            setLoading(false)
+        }
+        catch (err) {
+            setLoading(false)
+            console.log(err);
+        }   
+    }
+    useEffect(()=>{
+        profile()
+    },[])
+
     const contextData = {
         getallproducts,
-        productdetails
+        productdetails,
+        profile,
+        profileData
     }
 
     return (

@@ -2,9 +2,9 @@ import { createContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { baseurl } from "../baseurl";
+import useAxios from "../utils/useAxios";
 
 const AuthContext = createContext();
-
 export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
@@ -58,22 +58,6 @@ export const AuthProvider = ({ children }) => {
         history("/login");
     };
 
-    const profile = async() => {
-        setLoading(true)
-        let url = baseurl + ''
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-
-            })
-            setLoading(false)
-        }
-        catch (err) {
-            setLoading(false)
-            console.log(err);
-        }
-    }
-
     const checkUser = () => {
         if (!user) {
             history('/login')
@@ -89,11 +73,10 @@ export const AuthProvider = ({ children }) => {
         loginUser,
         logoutUser,
         checkUser,
-        profile,
         loading,
         setLoading
     };
-
+    
     useEffect(() => {
         if (authTokens) {
             setUser(jwt_decode(authTokens.access));
