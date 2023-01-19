@@ -5,24 +5,16 @@ import AuthContext from "./AuthContext";
 const ProductContext = createContext()
 export default ProductContext;
 export const ProductProvider = ({ children }) => {
-    const { loading, setLoading,authTokens } = useContext(AuthContext)
-    const api=useAxios()
-    const getallproducts = async (filterQuery) => {
-        setLoading(true)
+    const { loading, setLoading, authTokens } = useContext(AuthContext)
+    const api = useAxios()
+    const [productsData, setProductsData] = useState([])
+    const getallproducts = async () => {
         try {
-            let url = baseurl + 'api/products/'
-            const response = await fetch(url, {
-                method:'GET',
-                headers:{
-                    Authorization:'Bearer '+authTokens.access
-                }
-            })
-            const filterResponse = response.filter((ele) => { return ele.name.toLowerCase().includes(filterQuery.toLowerCase()) })
-            setLoading(false)
-            return filterResponse
+            let url = baseurl + 'api/products/';
+            const response = await api.get(url);
+            setProductsData(response.data)
         }
         catch (err) {
-            setLoading(false)
             console.log(err)
         }
     }
@@ -31,13 +23,7 @@ export const ProductProvider = ({ children }) => {
         setLoading(true)
         let url = baseurl + 'api/products/'
         try {
-            const response = await fetch(url, {
-                method: 'POST',
-                body: details,
-                headers:{
-                    Authorization:'Bearer '+authTokens.access
-                }
-            })
+            const response = await api.post(url, details)
             setLoading(false)
         }
         catch (err) {
@@ -49,14 +35,9 @@ export const ProductProvider = ({ children }) => {
 
     const productdetails = async (id) => {
         setLoading(true)
-        let url = baseurl + `api/products/${id}/`
+        let url = baseurl + `api/products/?id=${id}`
         try {
-            const response = await fetch(url, {
-                method:'GET',
-                headers:{
-                    Authorization:'Bearer '+authTokens.access
-                }
-            })
+            const response = await api.get(url)
             setLoading(false)
             return response
         }
@@ -66,29 +47,28 @@ export const ProductProvider = ({ children }) => {
         }
     }
 
-    const [profileData,setProfileData]=useState({})
-    const profile = async() => {
-        setLoading(true)
+    const [profileData, setProfileData] = useState({})
+    const profile = async () => {
         let url = baseurl + 'api/profile/'
         try {
             const response = await api.get(url)
             setProfileData(response.data)
-            setLoading(false)
         }
         catch (err) {
-            setLoading(false)
             console.log(err);
-        }   
+        }
     }
-    useEffect(()=>{
+    useEffect(() => {
         profile()
-    },[])
+        getallproducts()
+    }, [])
 
     const contextData = {
         getallproducts,
         productdetails,
         profile,
-        profileData
+        profileData,
+        productsData
     }
 
     return (

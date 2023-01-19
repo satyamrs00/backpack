@@ -11,16 +11,10 @@ export default function Product() {
     useEffect(() => { checkUser() }, [])
 
     let { theme, myStyle, inputStyle } = useContext(ThemeContext)
-    let { getallproducts } = useContext(ProductContext)
-
-    const [data, setData] = useState([])
+    let { productsData } = useContext(ProductContext)
 
     //search feature
     const [searchQuery, setSearchQuery] = useState('')
-    useEffect(() => {
-        setData(getallproducts(searchQuery))
-        // eslint-disable-next-line
-    }, [searchQuery])
 
     const handleClear = (e) => {
         const inputele = e.target.parentElement.parentElement.previousElementSibling
@@ -75,10 +69,12 @@ export default function Product() {
                 </div>
                 <div className="row">
                     {/* <p className='mx-4'>search results for </p> */}
-                    {data.map((element, index) => {
+                    {productsData.filter( (searchQuery)=> {
+                        return productsData.name.toLowerCase().includes(searchQuery.toLowerCase())
+                    }).map((element, index) => {
                         return <div className="col-md-3 justify-content-center d-flex" style={{ margin: 'calc(1rem + .5vw) 0' }} key={index}>
-                            <ProductItem item={element} />
-                        </div>
+                        <ProductItem item={element} />
+                    </div>
                     })}
                 </div>
                 <h6 className='mx-4 my-3 pb-3'>Could not find your book above ? <button className="btn btnBg btn-sm shadow-sm" style={{ marginTop: 'calc(.5rem - .5vw)' }} onClick={handleShow}>Raise a request</button></h6>
