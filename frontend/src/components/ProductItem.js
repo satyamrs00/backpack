@@ -13,11 +13,12 @@ export default function ProductItem(props) {
     const { checkUser } = useContext(AuthContext)
     useEffect(() => { checkUser() }, [])
 
-    let { productdetails } = useContext(ProductContext)
+    let { productdetails,productsData } = useContext(ProductContext)
 
     const [data, setData] = useState()
     useEffect(() => {
-        productdetails(product.id)
+        // productdetails(product.id)
+        setData(productsData.filter((ele)=>(ele.id===product.id))[0])
     }, [])
 
     const handleClick = () => {
@@ -53,11 +54,11 @@ export default function ProductItem(props) {
     return (
         <>
             <div className="card" style={{ width: '18rem', border: '3px outset whitesmoke', boxShadow: '0 0 5px grey', ...myStyle }}>
-                <img src={product.photo1} className="card-img-top" alt="..." style={{ height: 'calc(15rem + 2vw)' }} />
+                <img src={product.photo1?product.photo1:''} className="card-img-top" alt="..." style={{ height: 'calc(15rem + 2vw)' }} />
                 <div className="card-body">
                     <div className="row">
-                        <h5 className="card-title col" style={{ fontFamily: 'Courgette' }}>{product.name}</h5>
-                        <img className='col-2' src={product.available ? available : notavailable} alt={product.available ? 'available' : 'not available'} style={{ width: 'calc(3rem + .5vw)', height: "calc(1.5rem + .5vw)" }} />
+                        <h5 className="card-title col" style={{ fontFamily: 'Courgette' }}>{product.name?product.name:''}</h5>
+                        <img className='col-2' src={product.available?(product.available ? available : notavailable):''} alt={product.available?(product.available ? 'available' : 'not available'):''} style={{ width: 'calc(3rem + .5vw)', height: "calc(1.5rem + .5vw)" }} />
                     </div>
                     <button onClick={handleClick} className="btn btn-sm rounded mt-2 shadow-sm btnBg" style={{ fontFamily: "Courgette" }}>More Details</button>
                 </div>

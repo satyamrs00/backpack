@@ -6,7 +6,6 @@ import AuthContext from '../context/AuthContext'
 export default function LendBook() {
     const {checkUser}=useContext(AuthContext)
     useEffect(()=>{checkUser()},[])
-
     const {theme,myStyle,inputStyle}=useContext(ThemeContext)
     const formData = new FormData()
     const [details, setDetails] = useState({})
@@ -30,12 +29,12 @@ export default function LendBook() {
                     <h2 style={{ fontFamily: 'serif', textAlign: 'center', marginBottom: "calc(2.5rem - 1vw)",fontWeight:"600" }}>Register your book &#128218;</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-4">
-                            <label htmlFor="first_name" style={{ fontSize: '1.2rem', marginBottom: ".5rem" }}>Name of book*</label>
-                            <input type="text" name='first_name' className="form-control border-0 shadow-sm py-2" onChange={handleOnChange} required style={{...inputStyle}}/>
+                            <label htmlFor="name" style={{ fontSize: '1.2rem', marginBottom: ".5rem" }}>Name of book*</label>
+                            <input type="text" name='name' className="form-control border-0 shadow-sm py-2" onChange={handleOnChange} required style={{...inputStyle}}/>
                         </div>
                         <div className="mb-4">
-                            <label htmlFor="last_name" style={{ fontSize: '1.2rem', marginBottom: ".5rem" }}>Description of book *</label>
-                            <textarea type="text" name='last_name' className="form-control border-0 shadow-sm py-2" style={{...inputStyle, height: "7rem" }} onChange={handleOnChange} required />
+                            <label htmlFor="description" style={{ fontSize: '1.2rem', marginBottom: ".5rem" }}>Description of book *</label>
+                            <textarea type="text" name='description' className="form-control border-0 shadow-sm py-2" style={{...inputStyle, height: "7rem" }} onChange={handleOnChange} required />
                         </div>
                         <div className={`mb-4 shadow-sm p-3 text-${theme==='light'?'dark':''}`} style={{...inputStyle}}>
                             <span>Photo 1 : * </span><label><span className='fileInpStyleBtn ms-1'><i className="fa-solid fa-upload me-1"></i>Upload Image</span><input type="file" name="photo1" className='fileInpBtn ms-2' onChange={(e) => { formData.append('photo1', e.target.files[0]) }} required /></label>
