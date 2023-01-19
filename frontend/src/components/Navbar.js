@@ -7,18 +7,20 @@ import image from './images/bookbg.png'
 import sun from './images/sun.png'
 import moon from './images/moon.png'
 import '../App.css'
+import ProductContext from '../context/ProductContext';
+import { baseurl } from '../baseurl';
 
 export default function Navbar(props) {
     const { theme, toggleTheme } = useContext(ThemeContext)
-    const { user, logoutUser, profile,loading } = useContext(AuthContext)
+    const { user, logoutUser,loading } = useContext(AuthContext)
+    const {profileData,profile}=useContext(ProductContext)
+
     useEffect(()=>{
         props.loading(loading)
     },[loading])
-
-    const [data,setData]=useState()
     useEffect(()=>{
-      setData(profile())
-    },[])  
+        profile()
+    },[])
 
     const location = useLocation()
     if (location.pathname === '/') document.title = 'BackPack - Home'
@@ -95,8 +97,8 @@ export default function Navbar(props) {
                         <div className={`d-flex ms-2 ${window.screen.width < 990 ? 'pb-2' : ''}`}>
                             {!user && location.pathname === '/login' && <Link className="btn text-dark shadow-sm btnBg me-4 fs-5" to="/register" role="button" style={{ padding: 'calc(.3rem + .3vw) calc(.5rem + .5vw)' }}><i className="fa-solid fa-user-plus fa-sm"></i> &nbsp;Register</Link>}
                             {!user && location.pathname !== '/login' && <Link className="btn text-dark shadow-sm btnBg me-4 fs-5" to="/login" role="button" style={{ padding: 'calc(.3rem + .3vw) calc(.5rem + 1vw)' }}><i className="fa-solid fa-right-to-bracket"></i> &nbsp;Login</Link>}
-                            {user && <div className='dropdown'><button className="btn shadow-none d-flex justify-content-center" type="button" data-bs-toggle="dropdown" aria-expanded="false"><img src={data.user.profile_pic} alt="" width={30} height={30} style={{ borderRadius: '50%', border: '1px solid grey' }} /><span style={{ fontSize: 'calc(1.2rem + .1vw)', fontWeight: "600", ...myStyle }}>&nbsp;{data.user.first_name}</span></button><ul className={`dropdown-menu dropdown-menu-lg-end border-${theme==='light'?'':'light'}`} style={{ ...myStyle }}>
-                                <li className='d-flex justify-content-center'><img src={data.user.profile_pic} alt="" width={35} height={35} style={{ borderRadius: '50%', border: '1px solid grey' }} /><span style={{ fontSize: '1.3rem', fontWeight: "600" }}>&nbsp;{data.user.first_name}</span></li>
+                            {user && <div className='dropdown'><button className="btn shadow-none d-flex justify-content-center" type="button" data-bs-toggle="dropdown" aria-expanded="false"><img src={profileData.user?`${profileData.user.profile_pic.slice(1,)}`:''} alt="" width={30} height={30} style={{ borderRadius: '50%', border: '1px solid grey' }} /><span style={{ fontSize: 'calc(1.2rem + .1vw)', fontWeight: "600", ...myStyle }}>&nbsp;{profileData.user?profileData.user.first_name:''}</span></button><ul className={`dropdown-menu dropdown-menu-lg-end border-${theme==='light'?'':'light'}`} style={{ ...myStyle }}>
+                                <li className='d-flex justify-content-center'><img src={profileData.user?`${profileData.user.profile_pic.slice(1,)}`:''} alt="" width={35} height={35} style={{ borderRadius: '50%', border: '1px solid grey' }} /><span style={{ fontSize: '1.3rem', fontWeight: "600" }}>&nbsp;{profileData.user?profileData.user.first_name:''}</span></li>
                                 <hr className='mt-2 mb-1' />
                                 <li><Link className={`dropdown-item text-${theme === 'light' ? 'dark' : 'light'}`} to="/profile"><i className="fa-solid fa-user me-2"></i>Manage Profile</Link></li>
                                 <li><Link className={`dropdown-item text-${theme === 'light' ? 'dark' : 'light'}`} to="#"><i className="fa-sharp fa-solid fa-clock-rotate-left me-2"></i>Your Transaction</Link></li>
