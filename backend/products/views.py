@@ -61,7 +61,7 @@ class ProductViewSet(generics.CreateAPIView):
 class RequestProduct(generics.GenericAPIView, CreateModelMixin):
     class IsSameCollegeButNotSelf(BasePermission):
         def has_permission(self, request, view):
-            return request.user.college == Product.objects.get(id=request.data["product"]).current_owner.college and request.user != Product.objects.get(id=request.data["product"]).current_owner
+            return request.user.college == Product.objects.get(id=request.data["product"]).current_owner.college and request.user != Product.objects.get(id=request.data["product"]).current_owner.id
 
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
