@@ -66,7 +66,7 @@ export const ProductProvider = ({ children }) => {
     useEffect(() => {
         profile()
         getallproducts()
-    }, [])
+    }, [authTokens])
 
     const contextData = {
         getallproducts,

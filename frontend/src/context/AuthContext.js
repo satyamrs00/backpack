@@ -18,17 +18,8 @@ export const AuthProvider = ({ children }) => {
     const loginUser = async (credential) => {
         setLoading(true)
         let url = baseurl + 'auth/token/'
-        // const response = await fetch(url, {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(credential)
-        // });
         const response=await axios.post(url,credential)
-        // const data = await response.json();
         setLoading(false)
-        console.log(response)
         if (response.status=== 200) {
             setAuthTokens(response.data);
             setUser(jwt_decode(response.data.access));
@@ -42,17 +33,8 @@ export const AuthProvider = ({ children }) => {
     const registerUser = async (credential) => {
         setLoading(true)
         let url = baseurl + 'auth/register/'
-        // const response = await fetch(url, {
-        //     method: "POST",
-        //     body: credential,
-        //     headers:{
-        //         'Content-Type':'multipart/form-data'
-        //     },
-        // });
-
         const response=await axios.post(url,credential)
         setLoading(false)
-        console.log(response);
         if (response.status === 201) {
             history("/login");
         } else {

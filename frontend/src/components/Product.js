@@ -11,7 +11,7 @@ export default function Product() {
     useEffect(() => { checkUser() }, [])
 
     let { theme, myStyle, inputStyle } = useContext(ThemeContext)
-    let { productsData } = useContext(ProductContext)
+    let { productsData, profileData } = useContext(ProductContext)
 
     //search feature
     const [searchQuery, setSearchQuery] = useState('')
@@ -68,15 +68,15 @@ export default function Product() {
                     </div>
                 </div>
                 <div className="row">
-                    {/* <p className='mx-4'>search results for </p> */}
                     {productsData.map((element, index) => {
-                        if(element.name.toLowerCase().includes(searchQuery.toLowerCase())){
-                        return <div className="col-md-3 justify-content-center d-flex" style={{ margin: 'calc(1rem + .5vw) 0' }} key={index}>
-                        <ProductItem item={element} />
-                    </div>}
-                    else{
-                        return ''
-                    }
+                        if (element.name.toLowerCase().includes(searchQuery.toLowerCase()) && element.current_owner.id !== (profileData.user ? (profileData.user.id) : '')) {
+                            return <div className="col-md-3 justify-content-center d-flex" style={{ margin: 'calc(1rem + .5vw) 0' }} key={index}>
+                                <ProductItem item={element} />
+                            </div>
+                        }
+                        else {
+                            return ''
+                        }
                     })}
                 </div>
                 <h6 className='mx-4 my-3 pb-3'>Could not find your book above ? <button className="btn btnBg btn-sm shadow-sm" style={{ marginTop: 'calc(.5rem - .5vw)' }} onClick={handleShow}>Let us know</button></h6>

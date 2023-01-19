@@ -6,16 +6,14 @@ import notavailable from './images/notavailable.png'
 import AuthContext from "../context/AuthContext";
 import ThemeContext from '../context/ThemeContext'
 import Loading from './Loading'
+import useAxios from "../utils/useAxios";
+import { baseurl } from '../baseurl'
 
 export default function ProductDetails() {
+    const api=useAxios()
     const { myStyle } = useContext(ThemeContext)
     const { checkUser } = useContext(AuthContext)
     useEffect(() => { checkUser() }, [])
-
-    const handleClick = (e) => {
-        e.target.innerText = 'Requested'
-        e.target.disabled = 'true'
-    }
 
     const location = useLocation()
     const data = location.state.object
@@ -25,9 +23,18 @@ export default function ProductDetails() {
     if (data.photo3) { imageArr.push(data.photo3) }
     if (data.photo4) { imageArr.push(data.photo4) }
     if (data.photo5) { imageArr.push(data.photo5) }
+    const formData=new FormData()
+    const handleClick = async(e) => {
+        e.target.innerText = 'Requested'
+        e.target.disabled = 'true'
+        formData.append('product',data.id)
+        let url=baseurl+'api/request-product/'
+        await api.post(url,formData)
+    }
+
     return (
         <>
-            <div style={{ ...myStyle, boxShadow: '0 0 10px grey', padding: '1.5rem', border: "4px outset lightgrey" }} className='container rounded-3'>
+            <div style={{...myStyle, boxShadow: '0 0 10px grey', padding: '1.5rem', border: "4px outset lightgrey" }} className='container rounded-3'>
                 <div className="row">
                     <div className={`col-${window.screen.width > 900 ? 6 : 12} d-flex justify-content-center rounded`}>
                         <Carousel images={imageArr} width='calc(10rem + 25vw)' height='calc(12rem + 23vw)' />
