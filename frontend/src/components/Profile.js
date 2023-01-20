@@ -69,8 +69,8 @@ const Profile = () => {
                   <p className="p-0 m-0">Email : {ele.fromOwner.email}</p>
                   <p className="p-0 m-0">Address : {ele.fromOwner.address}</p>
                   <div className="d-flex justify-content-end">
-                    <button className='btn btn-success shadow-sm me-2' onClick={() => {handleClose(); handleAcceptReject(ele.id, 'accepted'); }}>Accept</button>
-                    <button className='btn btn-danger shadow-sm' onClick={() => {handleClose(); handleAcceptReject(ele.id, 'rejected'); }}>Decline</button>
+                    <button className='btn btn-success shadow-sm me-2' onClick={() => { handleClose(); handleAcceptReject(ele.id, 'accepted'); }}>Accept</button>
+                    <button className='btn btn-danger shadow-sm' onClick={() => { handleClose(); handleAcceptReject(ele.id, 'rejected'); }}>Decline</button>
                   </div>
                 </div>
               }
@@ -79,13 +79,13 @@ const Profile = () => {
         </Modal.Body>
       </Modal>
 
-      {(loading || Object.keys(profileData).length===0) && <Loading />}
-      {(!loading && Object.keys(profileData).length!==0) &&
+      {(loading || Object.keys(profileData).length === 0) && <Loading />}
+      {(!loading && Object.keys(profileData).length !== 0) &&
         <div style={{ ...myStyle, padding: '2rem 2rem', marginTop: '-1rem' }}>
           <div className="row w-100">
-            <div className={`col-md-5 ${window.screen.width > 992 ? 'd-flex justify-content-center' : ''}`}>
+            <div className={`col-md-4 ${window.screen.width > 992 ? 'd-flex justify-content-center' : ''}`}>
               <div style={{ minWidth: "calc(10rem + 10vw)" }}>
-                <img src={profileData.user ? profileData.user.profile_pic : ''} alt="" width={110} height={100} />
+                <img src={profileData.user ? profileData.user.profile_pic : ''} alt="" width={120} height={110} />
                 <h4 className="mt-4">
                   {profileData.user ? profileData.user.first_name : ''}  {profileData.user ? profileData.user.last_name : ''}
                 </h4>
@@ -105,12 +105,27 @@ const Profile = () => {
                 </ul>
               </div>
             </div>
-            <div className="col-md-7">
-              <div className="d-flex justify-content-end">
-                <button className="btn position-relative shadow-none" onClick={handleShow} style={{ backgroundColor: "orange", fontWeight: '500', color: '#404040' }} >New Requests {pendingRequestsToMe > 0 && <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            <div className="col-md-8">
+              <div>
+                <button className="btn shadow-none" onClick={handleShow} style={{ position: "fixed", bottom: 'calc(3rem + 1vw)', right: 'calc(1rem + 1vw)', backgroundColor: "orange", fontWeight: '500', color: '#404040' }} >New Requests {<span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                   {pendingRequestsToMe}
                   <span className="visually-hidden">unread messages</span>
                 </span>}</button>
+
+                <div className="mt-3">
+                  <h2>Your Books</h2>
+                  <div className="row p-3 mx-1" style={{ ...inputMyStyle }}>
+                    {console.log(profileData)}
+                    {profileData.product.map((ele, index) => {
+                      return <div className="col-md-3 my-3 d-flex justify-content-center" key={index}>
+                        <div style={{ borderRadius: "5px",boxShadow:"0 0 8px grey",...myStyle }}>
+                          <img src={ele.photo1} alt="" style={{width:'calc(15rem - 3vw)',height:'calc(14rem - 3vw)'}}/>
+                          <h5 className="text-center py-1">{ele.name}</h5>
+                        </div>
+                      </div>
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
