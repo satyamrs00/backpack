@@ -55,7 +55,7 @@ export default function Login() {
             {!loading &&
                 <div className="container-fluid d-flex justify-content-center align-items-center p-4" style={{ minHeight: 'calc(30rem + 10vw)' }}>
                     <div className="container row w-80 justify-content-center align-items-center rounded" style={{ ...myStyle, boxShadow: '0 0 20px grey', padding: 'calc(1.5rem + 1vw) calc(.5rem + 2.5vw) calc(1rem) calc(.5rem + 2.5vw)' }}>
-                        <div className={`alert alert-danger d-${showError ? 'flex' : 'none'}`} role="alert">
+                        <div className={`alert alert-danger d-${showError ? 'block' : 'none'}`} role="alert">
                             <strong>Login Failed ! </strong>&nbsp; Please try to login with correct credentials
                         </div>
                         <div className={`col-${window.screen.width > 900 ? 6 : 12}`}>

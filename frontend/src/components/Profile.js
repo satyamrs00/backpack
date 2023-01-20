@@ -18,11 +18,11 @@ const Profile = () => {
   const [inputMyStyle, setInputMyStyle] = useState({})
   useEffect(() => {
     if (theme === 'dark') {
-      setMyStyle({ background: '#121212', color: 'rgb(245 245 245)' });
+      setMyStyle({ background: '#101010', color: 'rgb(245 245 245)' });
       setInputMyStyle({ background: '#202020', color: "white" })
     }
     else {
-      setMyStyle({ background: 'rgb(245 245 245)', color: "black" });
+      setMyStyle({ background: 'rgb(240 240 245)', color: "black" });
       setInputMyStyle({ background: 'white', color: "black" })
     }
   }, [theme])
@@ -54,8 +54,8 @@ const Profile = () => {
     <>
       {/* Modal */}
       <Modal show={show} onHide={handleClose} style={{backdropFilter: 'blur(2px)', overflow: 'visible'}}>
-        <ModalHeader closeButton style={{ ...myStyle ,border:'1px solid white',borderBottom:'none'}}><h3>All requests for your books</h3></ModalHeader>
-        <Modal.Body style={{ padding: '1.5rem', ...myStyle,border:"1px solid white",borderTop:'none' }}>
+        <ModalHeader closeButton style={{ ...myStyle ,border:'1px solid white',borderBottom:'none',letterSpacing:".5px"}}><h3>All requests for your books</h3></ModalHeader>
+        <Modal.Body style={{ padding: '1.5rem', ...myStyle,border:"1px solid white",borderTop:'none',letterSpacing:".5px" }}>
           {pendingRequestsToMe === 0 && <p className="fs-5 fst-italic">No request now</p>}
           {
             ((profileData.request_to_me) ? profileData.request_to_me : []).map((ele, index) => {
@@ -93,15 +93,15 @@ const Profile = () => {
                 <h6 className="mt-2 mb-3">{profileData.user ? profileData.user.email : ''}</h6>
                 <hr />
                 <h4 className="mt-3">About</h4>
-                <ul className="list p-0">
-                  <li style={{ ...inputMyStyle }} className="list-group-item fw-bold mt-2">College</li>
-                  <li style={{ ...inputMyStyle }} className="list-group-item mt-1">{profileData.user ? profileData.user.college : ''}</li>
-                  <li style={{ ...inputMyStyle }} className="list-group-item fw-bold mt-2">Batch</li>
-                  <li style={{ ...inputMyStyle }} className="list-group-item mt-1">{profileData.user ? profileData.user.batch : ''}</li>
-                  <li style={{ ...inputMyStyle }} className="list-group-item  fw-bold mt-2">Address</li>
-                  <li style={{ ...inputMyStyle }} className="list-group-item mt-1">{profileData.user ? profileData.user.address : ''}</li>
-                  <li style={{ ...inputMyStyle }} className="list-group-item fw-bold mt-2">Mobile</li>
-                  <li style={{ ...inputMyStyle }} className="list-group-item mt-1">{profileData.user ? profileData.user.phone : ''}</li>
+                <ul className="list-group" style={{fontFamily:"Roboto Slab"}}>
+                  <li className="list-group-item mt-2 p-0" style={{...myStyle,border:'none',letterSpacing:".5px"}}>College</li>
+                  <li className="list-group-item p-0 fw-bold" style={{...myStyle,border:'none',letterSpacing:".5px"}}>{profileData.user ? profileData.user.college : ''}</li>
+                  <li className="list-group-item mt-3 p-0" style={{...myStyle,border:'none',letterSpacing:".5px"}}>Batch</li>
+                  <li className="list-group-item p-0 fw-bold" style={{...myStyle,border:'none',letterSpacing:".5px"}}>{profileData.user ? profileData.user.batch : ''}</li>
+                  <li className="list-group-item mt-3 p-0" style={{...myStyle,border:'none',letterSpacing:".5px"}}>Address</li>
+                  <li className="list-group-item p-0 fw-bold" style={{...myStyle,border:'none',letterSpacing:".5px"}}>{profileData.user ? profileData.user.address : ''}</li>
+                  <li className="list-group-item mt-3 p-0" style={{...myStyle,border:'none',letterSpacing:".5px"}}>Mobile</li>
+                  <li className="list-group-item p-0 fw-bold mt-1" style={{...myStyle,border:'none',letterSpacing:".5px"}}>{profileData.user ? profileData.user.phone : ''}</li>
                 </ul>
               </div>
             </div>
@@ -121,6 +121,7 @@ const Profile = () => {
                         <div style={{ borderRadius: "5px",boxShadow:"0 0 8px grey",...myStyle }}>
                           <img src={ele.photo1} alt="" style={{width:'calc(15rem - 3vw)',height:'calc(13rem - 3vw)',borderTopLeftRadius:"5px",borderTopRightRadius:'5px'}}/>
                           <h5 className="text-center py-1">{ele.name}</h5>
+                          <h6 className="text-center">Owner : {(ele.owner.id===ele.current_owner.id)?'You':(ele.owner.first_name +' '+ ele.owner.last_name)}</h6>
                         </div>
                       </div>
                     })}
