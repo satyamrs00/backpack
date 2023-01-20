@@ -26,6 +26,10 @@ nav li a.dropdown-item:active{
 }
 
 /* //Forms */
+#college:focus,#college:active{
+    border: none;
+    outline: none;
+}
 .form-floating input{
     font-size: calc(1.1rem - .1vw);
     color: rgba(1, 90, 72, 0.822);
@@ -103,4 +107,14 @@ nav li a.dropdown-item:active{
 }
 #gototoparrow:active{
     background-color: rgb(1, 89, 92);
+}
+
+/* //transaction */
+.transactionNavbarBtn{
+    padding: .5rem 1rem;
+    font-size: 1.1rem;
+    margin: 0 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
 }
