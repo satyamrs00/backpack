@@ -26,10 +26,11 @@ nav li a.dropdown-item:active{
 }
 
 /* //Forms */
-#college:focus,#college:active{
+#college,#college:focus,#college:active{
     border: none;
     outline: none;
 }
+
 .form-floating input{
     font-size: calc(1.1rem - .1vw);
     color: rgba(1, 90, 72, 0.822);
