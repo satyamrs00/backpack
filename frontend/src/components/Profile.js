@@ -53,9 +53,9 @@ const Profile = () => {
   return (
     <>
       {/* Modal */}
-      <Modal show={show} onHide={handleClose} style={{ backdropFilter: 'blur(2px)', overflow: 'visible' }}>
-        <ModalHeader closeButton style={{ ...myStyle }}><h3>All requests for your books</h3></ModalHeader>
-        <Modal.Body style={{ padding: '1.5rem', ...myStyle }}>
+      <Modal show={show} onHide={handleClose} style={{backdropFilter: 'blur(2px)', overflow: 'visible'}}>
+        <ModalHeader closeButton style={{ ...myStyle ,border:'1px solid white',borderBottom:'none'}}><h3>All requests for your books</h3></ModalHeader>
+        <Modal.Body style={{ padding: '1.5rem', ...myStyle,border:"1px solid white",borderTop:'none' }}>
           {pendingRequestsToMe === 0 && <p className="fs-5 fst-italic">No request now</p>}
           {
             ((profileData.request_to_me) ? profileData.request_to_me : []).map((ele, index) => {

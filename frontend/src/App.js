@@ -18,6 +18,7 @@ import Profile from './components/Profile';
 import { AuthProvider } from "./context/AuthContext";
 import { ProductProvider } from './context/ProductContext';
 import { ThemeProvider } from './context/ThemeContext';
+import Transaction from './components/Transaction';
 
 function App() {
   const [appTheme, setAppTheme] = useState('light')
@@ -50,6 +51,7 @@ function App() {
                   <Route exact path='/lendbook' element={<LendBook />} />
                   <Route exact path='/contactus' element={<ContactUs />} />
                   <Route exact path='/profile' element={<Profile />} />
+                  <Route exact path='/transaction' element={<Transaction />} />
                   <Route exact path='*' element={<Pagenotfound />} />
                 </Routes>
               </div>
