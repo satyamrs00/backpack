@@ -18,23 +18,34 @@ export const AuthProvider = ({ children }) => {
     const loginUser = async (credential) => {
         setLoading(true)
         let url = baseurl + 'auth/token/'
-        const response=await axios.post(url,credential)
-        if (response.status=== 200) {
-            setAuthTokens(response.data);
-            setUser(jwt_decode(response.data.access));
-            localStorage.setItem("authTokens", JSON.stringify(response.data));
-            history("/");
-        } else {
-            alert("Something went wrong!");
+        try {
+            const response = await axios.post(url, credential)
+            if (response.status === 200) {
+                setAuthTokens(response.data);
+                setUser(jwt_decode(response.data.access));
+                localStorage.setItem("authTokens", JSON.stringify(response.data));
+                history("/");
+            }
+            setLoading(false)
+            return 200
         }
-        console.log('login');
-        setLoading(false)
+        catch (err) {
+            if (err.response.status === 401) {
+                setLoading(false)
+                return 401
+            }
+            else {
+                setLoading(false)
+                alert("Something went wrong!");
+                return err.response.status
+            }
+        }
     };
 
     const registerUser = async (credential) => {
         setLoading(true)
         let url = baseurl + 'auth/register/'
-        const response=await axios.post(url,credential)
+        const response = await axios.post(url, credential)
         if (response.status === 201) {
             history("/login");
         } else {
@@ -68,7 +79,7 @@ export const AuthProvider = ({ children }) => {
         loading,
         setLoading
     };
-    
+
     useEffect(() => {
         if (authTokens) {
             setUser(jwt_decode(authTokens.access));

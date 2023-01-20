@@ -72,7 +72,7 @@ export default function Product() {
                     </div>
                     <div className="row">
                         {productsData.map((element, index) => {
-                            if (element.name.toLowerCase().includes(searchQuery.toLowerCase()) && element.current_owner.id !== (profileData.user ? (profileData.user.id) : '')) {
+                            if (element.current_owner.id !== (profileData.user ? (profileData.user.id) : '') && element.name.toLowerCase().includes(searchQuery.toLowerCase()) ) {
                                 return <div className="col-md-3 justify-content-center d-flex" style={{ margin: 'calc(1rem + .5vw) 0' }} key={index}>
                                     <ProductItem item={element} />
                                 </div>

@@ -15,13 +15,16 @@ export default function Login() {
 
     const captchaRef = useRef(null)
     const captchaParaRef = useRef(null)
+
     const [ishide, setIsHide] = useState(true)
+    const [showError, setShowError] = useState(false)
 
     const [credential, setCredential] = useState({})
 
     const handleOnChange = (e) => {
         setCredential({ ...credential, [e.target.name]: e.target.value })
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (validateCaptcha(captchaRef.current.value) === false) {
@@ -33,14 +36,18 @@ export default function Login() {
             }, 3000)
             return false
         }
-        loginUser(credential);
+        const responsestatus = await loginUser(credential);
+        if (responsestatus === 401) {
+            setShowError(true)
+        }
+        else if (responsestatus === 200) {
+            setShowError(false)
+        }
     }
 
-    useEffect(()=>{
-    },[loading])
     useEffect(() => {
         loadCaptchaEnginge(5);
-    }, [])
+    }, [showError])
 
     return (
         <>
@@ -48,6 +55,9 @@ export default function Login() {
             {!loading &&
                 <div className="container-fluid d-flex justify-content-center align-items-center p-4" style={{ minHeight: 'calc(30rem + 10vw)' }}>
                     <div className="container row w-80 justify-content-center align-items-center rounded" style={{ ...myStyle, boxShadow: '0 0 20px grey', padding: 'calc(1.5rem + 1vw) calc(.5rem + 2.5vw) calc(1rem) calc(.5rem + 2.5vw)' }}>
+                        <div className={`alert alert-danger d-${showError ? 'flex' : 'none'}`} role="alert">
+                            <strong>Login Failed ! </strong>&nbsp; Please try to login with correct credentials
+                        </div>
                         <div className={`col-${window.screen.width > 900 ? 6 : 12}`}>
                             <h3 className=' pb-4 fst-italic' style={{ fontSize: 'calc(1.3rem + .4vw)' }}>Happy to see you again <span className='fst-normal'>&#x1F60A;</span></h3>
                             <form onSubmit={handleSubmit}>
@@ -61,7 +71,9 @@ export default function Login() {
                                     <img src={ishide ? hideeye : showeye} alt={ishide ? 'show' : 'hide'} title={ishide ? 'show' : 'hide'} style={{ cursor: 'pointer', position: 'absolute', right: '1.5rem', bottom: '1rem', width: '18px' }} onClick={() => setIsHide(e => !e)} />
                                 </div>
                                 <div style={{ fontSize: '1rem', marginBottom: 'calc(2vw)' }} >
+                                    <div style={{height:'2rem'}}>
                                     <LoadCanvasTemplateNoReload />
+                                    </div>
                                     <label htmlFor="captchaInp" className='mt-2'>Enter security code : &nbsp;</label>
                                     <input type="text" className="form-control shadow-sm border-0" name='captchaInp' style={{ width: 'calc(6rem + 4vw)', padding: '5px 10px', display: 'inline-block', ...inputStyle }} ref={captchaRef} required />&nbsp;
                                     <span className='text-danger captchaPara' style={{ visibility: 'hidden' }} ref={captchaParaRef}> Invalid security code</span>
