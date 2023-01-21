@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import {
   BrowserRouter,
@@ -18,7 +18,7 @@ import Profile from './components/Profile';
 import { AuthProvider } from "./context/AuthContext";
 import { ProductProvider } from './context/ProductContext';
 import { ThemeProvider } from './context/ThemeContext';
-import Loading from './components/Loading';
+import Transaction from './components/Transaction';
 
 function App() {
   const [appTheme, setAppTheme] = useState('light')
@@ -33,10 +33,6 @@ function App() {
     else { setMyStyle({ background: 'rgb(5 182 195)' }) }
   }, [appTheme])
 
-  const [loading,setLoading]=useState(false)
-  const toggleLoading=(data)=>{
-    setLoading(data)
-  }
   
   return (
     <>
@@ -44,9 +40,8 @@ function App() {
         <ThemeProvider>
           <AuthProvider>
             <ProductProvider>
-              <Navbar theme={toggleAppTheme} loading={toggleLoading}/>
-              {loading && <Loading/>}
-              {!loading && <div style={{ ...myStyle, minHeight: '100vh', padding: "1rem 0 0 0" }}>
+              <Navbar theme={toggleAppTheme}/>
+              <div style={{ ...myStyle,minHeight:`calc(${window.screen.height}px - 9rem - 5.6vw)`, padding: "1rem 0 0 0" }}>
                 <Routes>
                   <Route exact path='/' element={<Home />} />
                   <Route exact path='/login' element={<Login />} />
@@ -56,10 +51,10 @@ function App() {
                   <Route exact path='/lendbook' element={<LendBook />} />
                   <Route exact path='/contactus' element={<ContactUs />} />
                   <Route exact path='/profile' element={<Profile />} />
+                  <Route exact path='/transaction' element={<Transaction />} />
                   <Route exact path='*' element={<Pagenotfound />} />
                 </Routes>
               </div>
-              }
             </ProductProvider>
           </AuthProvider>
         </ThemeProvider>

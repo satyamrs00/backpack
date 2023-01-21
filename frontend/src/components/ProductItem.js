@@ -12,12 +12,10 @@ export default function ProductItem(props) {
     const navigate = useNavigate()
     const { checkUser } = useContext(AuthContext)
     useEffect(() => { checkUser() }, [])
-
     let { productdetails,productsData } = useContext(ProductContext)
 
     const [data, setData] = useState()
     useEffect(() => {
-        // productdetails(product.id)
         setData(productsData.filter((ele)=>(ele.id===product.id))[0])
     }, [])
 
@@ -58,7 +56,7 @@ export default function ProductItem(props) {
                 <div className="card-body">
                     <div className="row">
                         <h5 className="card-title col" style={{ fontFamily: 'Courgette' }}>{product.name?product.name:''}</h5>
-                        <img className='col-2' src={product.available?(product.available ? available : notavailable):''} alt={product.available?(product.available ? 'available' : 'not available'):''} style={{ width: 'calc(3rem + .5vw)', height: "calc(1.5rem + .5vw)" }} />
+                        <img className='col-2' src={product.available ? available : notavailable} alt={product.available?(product.available ? 'available' : 'not available'):''} style={{ width: 'calc(3rem + .5vw)', height: "calc(1.5rem + .5vw)" }} />
                     </div>
                     <button onClick={handleClick} className="btn btn-sm rounded mt-2 shadow-sm btnBg" style={{ fontFamily: "Courgette" }}>More Details</button>
                 </div>

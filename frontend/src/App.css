@@ -26,6 +26,11 @@ nav li a.dropdown-item:active{
 }
 
 /* //Forms */
+#college,#college:focus,#college:active{
+    border: none;
+    outline: none;
+}
+
 .form-floating input{
     font-size: calc(1.1rem - .1vw);
     color: rgba(1, 90, 72, 0.822);
@@ -58,12 +63,13 @@ nav li a.dropdown-item:active{
     background-color: rgb(5, 172, 169);
 }
 
+/* // Input image */
 .fileInpBtn::file-selector-button{
     display: none;
 }
 
 .fileInpBtn{
-    width: calc(2rem + 7vw);
+    width: calc(.5rem + 8vw);
 }
 
 .fileInpStyleBtn{
@@ -102,4 +108,14 @@ nav li a.dropdown-item:active{
 }
 #gototoparrow:active{
     background-color: rgb(1, 89, 92);
+}
+
+/* //transaction */
+.transactionNavbarBtn{
+    padding: .5rem 1rem;
+    font-size: 1.1rem;
+    margin: 0 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
 }

@@ -3,31 +3,23 @@ import { Link, useLocation } from 'react-router-dom'
 import AuthContext from "../context/AuthContext";
 import ThemeContext from '../context/ThemeContext'
 import Modal from 'react-bootstrap/Modal';
-import image from './images/bookbg.png'
 import sun from './images/sun.png'
 import moon from './images/moon.png'
 import '../App.css'
 import ProductContext from '../context/ProductContext';
-import { baseurl } from '../baseurl';
 
 export default function Navbar(props) {
     const { theme, toggleTheme } = useContext(ThemeContext)
-    const { user, logoutUser,loading } = useContext(AuthContext)
-    const {profileData,profile}=useContext(ProductContext)
-
-    useEffect(()=>{
-        props.loading(loading)
-    },[loading])
-    useEffect(()=>{
-        profile()
-    },[])
-
+    const { user, logoutUser } = useContext(AuthContext)
+    const {profileData}=useContext(ProductContext)
+    const capitalize=(str)=>{
+        return (str[0].toUpperCase() + str.slice(1))
+    }
     const location = useLocation()
     if (location.pathname === '/') document.title = 'BackPack - Home'
     else {
         let name = location.pathname.slice(1)
-        let capitalize = name[0].toUpperCase() + name.slice(1)
-        document.title = 'BackPack - ' + capitalize
+        document.title = 'BackPack - ' + capitalize(name)
     }
     const handleClick = () => {
         handleShow()
@@ -85,7 +77,7 @@ export default function Navbar(props) {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav ms-auto mb-lg-0">
                             <li className="nav-item">
-                                <Link className={`fs-5 nav-link ${location.pathname === '/about' ? `text-${theme === 'light' ? 'dark' : 'light'}` : "text-secondary"}`} style={{ fontSize: 'calc(1rem + .2vw)', margin: "0 .8rem" }} aria-current="page" to="/#about">About Us</Link>
+                                <Link className={`fs-5 nav-link ${location.pathname === '/' ? `text-${theme === 'light' ? 'dark' : 'light'}` : "text-secondary"}`} style={{ fontSize: 'calc(1rem + .2vw)', margin: "0 .8rem" }} aria-current="page" to="/">Home</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className={`fs-5 nav-link ${location.pathname === '/product' ? `text-${theme === 'light' ? 'dark' : 'light'}` : "text-secondary"}`} style={{ fontSize: 'calc(1rem + .2vw)', margin: "0 .8rem" }} to="/product">Products</Link>
@@ -97,11 +89,11 @@ export default function Navbar(props) {
                         <div className={`d-flex ms-2 ${window.screen.width < 990 ? 'pb-2' : ''}`}>
                             {!user && location.pathname === '/login' && <Link className="btn text-dark shadow-sm btnBg me-4 fs-5" to="/register" role="button" style={{ padding: 'calc(.3rem + .3vw) calc(.5rem + .5vw)' }}><i className="fa-solid fa-user-plus fa-sm"></i> &nbsp;Register</Link>}
                             {!user && location.pathname !== '/login' && <Link className="btn text-dark shadow-sm btnBg me-4 fs-5" to="/login" role="button" style={{ padding: 'calc(.3rem + .3vw) calc(.5rem + 1vw)' }}><i className="fa-solid fa-right-to-bracket"></i> &nbsp;Login</Link>}
-                            {user && <div className='dropdown'><button className="btn shadow-none d-flex justify-content-center" type="button" data-bs-toggle="dropdown" aria-expanded="false"><img src={profileData.user?profileData.user.profile_pic:''} alt="" width={30} height={30} style={{ borderRadius: '50%', border: '1px solid grey' }} /><span style={{ fontSize: 'calc(1.2rem + .1vw)', fontWeight: "600", ...myStyle }}>&nbsp;{profileData.user?profileData.user.first_name:''}</span></button><ul className={`dropdown-menu dropdown-menu-lg-end border-${theme==='light'?'':'light'}`} style={{ ...myStyle }}>
-                                <li className='d-flex justify-content-center'><img src={profileData.user?profileData.user.profile_pic:''} alt="" width={35} height={35} style={{ borderRadius: '50%', border: '1px solid grey' }} /><span style={{ fontSize: '1.3rem', fontWeight: "600" }}>&nbsp;{profileData.user?profileData.user.first_name:''}</span></li>
+                            {user && <div className='dropdown'><button className="btn shadow-none d-flex justify-content-center ps-0" type="button" data-bs-toggle="dropdown" aria-expanded="false"><img src={profileData.user?profileData.user.profile_pic:''} alt="" width={30} height={30} style={{ borderRadius: '50%', border: '1px solid grey' }} /><span style={{ fontSize: 'calc(1.2rem + .1vw)', fontWeight: "600", ...myStyle }}>&nbsp;{profileData.user?capitalize(profileData.user.first_name):''}</span></button><ul className={`dropdown-menu dropdown-menu-lg-end border-${theme==='light'?'':'light'}`} style={{ ...myStyle }}>
+                                <li className='d-flex justify-content-center'><img src={profileData.user?profileData.user.profile_pic:''} alt="" width={35} height={35} style={{ borderRadius: '50%', border: '1px solid grey' }} /><span style={{ fontSize: '1.3rem', fontWeight: "600" }}>&nbsp;{profileData.user?capitalize(profileData.user.first_name):''}</span></li>
                                 <hr className='mt-2 mb-1' />
                                 <li><Link className={`dropdown-item text-${theme === 'light' ? 'dark' : 'light'}`} to="/profile"><i className="fa-solid fa-user me-2"></i>Manage Profile</Link></li>
-                                <li><Link className={`dropdown-item text-${theme === 'light' ? 'dark' : 'light'}`} to="#"><i className="fa-sharp fa-solid fa-clock-rotate-left me-2"></i>Your Transaction</Link></li>
+                                <li><Link className={`dropdown-item text-${theme === 'light' ? 'dark' : 'light'}`} to="/transaction"><i className="fa-sharp fa-solid fa-clock-rotate-left me-2"></i>Your Transaction</Link></li>
                                 <li><Link className={`dropdown-item text-${theme === 'light' ? 'dark' : 'light'}`} to="/lendbook"><i className="fa-solid fa-book me-2"></i>Lend a Book</Link></li>
                                 <hr className='mt-2 mb-1' />
                                 <li><button className="btn text-light shadow-sm bg-danger" style={{ margin: '0 2rem' }} onClick={handleClick}><i className="fa-solid fa-power-off me-2"></i> LogOut</button></li>

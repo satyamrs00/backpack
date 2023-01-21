@@ -6,7 +6,7 @@ import AuthContext from "./AuthContext";
 const ProductContext = createContext()
 export default ProductContext;
 export const ProductProvider = ({ children }) => {
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const { loading, setLoading, authTokens } = useContext(AuthContext)
     const api = useAxios()
     const [productsData, setProductsData] = useState([])
@@ -30,12 +30,11 @@ export const ProductProvider = ({ children }) => {
             const response = await api.post(url, details)
             navigate('/product')
             getallproducts()
-            setLoading(false)
         }
         catch (err) {
-            setLoading(false)
             console.log(err);
         }
+        setLoading(false)
     }
 
     const productdetails = async (id) => {
@@ -47,13 +46,14 @@ export const ProductProvider = ({ children }) => {
             return response
         }
         catch (err) {
-            setLoading(false)
             console.log(err);
         }
+        setLoading(false)
     }
 
     const [profileData, setProfileData] = useState({})
     const profile = async () => {
+        setLoading(true)
         let url = baseurl + 'api/profile/'
         try {
             const response = await api.get(url)
@@ -62,11 +62,13 @@ export const ProductProvider = ({ children }) => {
         catch (err) {
             console.log(err);
         }
+        setLoading(false)
     }
+
     useEffect(() => {
         profile()
         getallproducts()
-    }, [])
+    }, [authTokens])
 
     const contextData = {
         getallproducts,
