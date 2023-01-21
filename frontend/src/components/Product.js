@@ -8,7 +8,7 @@ import ThemeContext from '../context/ThemeContext';
 import Loading from './Loading'
 
 export default function Product() {
-    const { checkUser, loading } = useContext(AuthContext)
+    const { checkUser, loading, setLoading } = useContext(AuthContext)
     //eslint-disable-next-line
     useEffect(() => { checkUser() }, [])
 
@@ -72,7 +72,7 @@ export default function Product() {
                     </div>
                     <div className="row">
                         {productsData.map((element, index) => {
-                            if (element.current_owner.id !== (profileData.user ? (profileData.user.id) : '') && element.name.toLowerCase().includes(searchQuery.toLowerCase()) ) {
+                            if (element.current_owner.id !== (profileData.user ? profileData.user.id : '') && element.name.toLowerCase().includes(searchQuery.toLowerCase())) {
                                 return <div className="col-md-3 justify-content-center d-flex" style={{ margin: 'calc(1rem + .5vw) 0' }} key={index}>
                                     <ProductItem item={element} />
                                 </div>
@@ -80,7 +80,7 @@ export default function Product() {
                         })}
                     </div>
                     <h6 className='mx-4 my-3 pb-3'>Could not find your book above ? <button className="btn btnBg btn-sm shadow-sm" style={{ marginTop: 'calc(.5rem - .5vw)' }} onClick={handleShow}>Let us know</button></h6>
-                    </div>
+                </div>
             }
         </>
     )

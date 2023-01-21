@@ -71,7 +71,7 @@ export default function Login() {
                                     <img src={ishide ? hideeye : showeye} alt={ishide ? 'show' : 'hide'} title={ishide ? 'show' : 'hide'} style={{ cursor: 'pointer', position: 'absolute', right: '1.5rem', bottom: '1rem', width: '18px' }} onClick={() => setIsHide(e => !e)} />
                                 </div>
                                 <div style={{ fontSize: '1rem', marginBottom: 'calc(2vw)' }} >
-                                    <div style={{height:'2rem'}}>
+                                    <div style={{height:'2.5rem'}}>
                                     <LoadCanvasTemplateNoReload />
                                     </div>
                                     <label htmlFor="captchaInp" className='mt-2'>Enter security code : &nbsp;</label>

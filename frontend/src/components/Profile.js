@@ -35,7 +35,7 @@ const Profile = () => {
 
   const formData = new FormData()
   const handleAcceptReject = async (id, status) => {
-    setPendingRequestsToMe(pendingRequestsToMe - 1)
+    setPendingRequestsToMe(0)
     let url = baseurl + 'api/accept-or-reject-request/'
     formData.append('transaction', id)
     formData.append('status', status)
@@ -45,27 +45,37 @@ const Profile = () => {
   }
 
   const [pendingRequestsToMe, setPendingRequestsToMe] = useState(0)
-  useEffect(() => {
+  const pendingRequestsToMeCounter=()=>{
+    let counter = 0;
     ((profileData.request_to_me) ? profileData.request_to_me : []).map((ele, index) => {
-      if (ele.status === 'pending') { setPendingRequestsToMe(pendingRequestsToMe + 1) }
+      if (ele.status === 'pending') { counter++ }
     })
+    setPendingRequestsToMe(counter)
+  }
+  
+  useEffect(() => {
+    pendingRequestsToMeCounter()
   }, [profileData])
 
+  const handleAvailability=async(id)=>{
+    const formData=new FormData()
+    formData.append('product',id)
+    let url=baseurl+'api/products/'
+    await api.put(url,formData)
+    profile()
+  }
+  
   //Modals function
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleAvailability=()=>{
-    
-  }
-
   return (
     <>
       {/* Modal */}
       <Modal show={show} onHide={handleClose} style={{ backdropFilter: 'blur(2px)', overflow: 'visible' }}>
-        <ModalHeader closeButton style={{ ...myStyle, border: '1px solid white', borderBottom: 'none', letterSpacing: ".5px" }}><h3>All requests for your books</h3></ModalHeader>
-        <Modal.Body style={{ padding: '1.5rem', ...myStyle, border: "1px solid white", borderTop: 'none', letterSpacing: ".5px" }}>
+        <ModalHeader closeButton style={{ ...inputMyStyle, border: '1px solid white', borderBottom: 'none', letterSpacing: ".5px" }}><h3>All requests for your books</h3></ModalHeader>
+        <Modal.Body style={{ padding: '1.5rem', ...inputMyStyle, border: "1px solid white", borderTop: 'none', letterSpacing: ".5px" }}>
           {pendingRequestsToMe === 0 && <p className="fs-5 fst-italic">No request now</p>}
           {
             ((profileData.request_to_me) ? profileData.request_to_me : []).map((ele, index) => {
@@ -93,8 +103,8 @@ const Profile = () => {
       {(!loading && Object.keys(profileData).length !== 0) &&
         <div style={{ ...myStyle, padding: '2rem 2rem', marginTop: '-1rem' }}>
           <div className="row w-100">
-            <div className={`col-md-4 ${window.screen.width > 992 ? 'd-flex justify-content-center' : ''}`}>
-              <div style={{ minWidth: "calc(10rem + 10vw)" }}>
+            <div className={`col-md-4 ${window.screen.width > 992 ? 'd-flex justify-content-center' : ''}`} style={{...inputMyStyle,borderRadius:"10px"}}>
+              <div style={{ minWidth: "calc(10rem + 10vw)",paddingTop:"1rem" }}>
                 <img src={profileData.user ? profileData.user.profile_pic : ''} alt="" width={120} height={110} style={{ borderRadius: "10px", background: 'rgb(200 200 200)' }} />
                 <h4 className="mt-4">
                   {profileData.user ?capitalize(profileData.user.first_name) : ''}  {profileData.user ?capitalize(profileData.user.last_name) : ''}
@@ -104,37 +114,37 @@ const Profile = () => {
                 <hr />
                 <h4 className="mt-3">About</h4>
                 <ul className="list-group" style={{ fontFamily: "Roboto Slab" }}>
-                  <li className="list-group-item mt-2 p-0" style={{ ...myStyle, border: 'none', letterSpacing: ".5px" }}>College</li>
-                  <li className="list-group-item mt-1 p-0 fw-bold" style={{ ...myStyle, border: 'none', letterSpacing: ".5px" }}>{profileData.user ? profileData.user.college : ''}</li>
-                  <li className="list-group-item mt-3 p-0" style={{ ...myStyle, border: 'none', letterSpacing: ".5px" }}>Batch</li>
-                  <li className="list-group-item mt-1 p-0 fw-bold" style={{ ...myStyle, border: 'none', letterSpacing: ".5px" }}>{profileData.user ? profileData.user.batch : ''}</li>
-                  <li className="list-group-item mt-3 p-0" style={{ ...myStyle, border: 'none', letterSpacing: ".5px" }}>Address</li>
-                  <li className="list-group-item mt-1 p-0 fw-bold" style={{ ...myStyle, border: 'none', letterSpacing: ".5px" }}>{profileData.user ? profileData.user.address : ''}</li>
-                  <li className="list-group-item mt-3 p-0" style={{ ...myStyle, border: 'none', letterSpacing: ".5px" }}>Mobile</li>
-                  <li className="list-group-item mt-1 p-0 fw-bold mb-4" style={{ ...myStyle, border: 'none', letterSpacing: ".5px" }}>{profileData.user ? profileData.user.phone : ''}</li>
+                  <li className="list-group-item mt-2 p-0" style={{ ...inputMyStyle, border: 'none', letterSpacing: ".5px" }}>College</li>
+                  <li className="list-group-item mt-1 p-0 fw-bold" style={{ ...inputMyStyle, border: 'none', letterSpacing: ".5px" }}>{profileData.user ? profileData.user.college : ''}</li>
+                  <li className="list-group-item mt-3 p-0" style={{ ...inputMyStyle, border: 'none', letterSpacing: ".5px" }}>Batch</li>
+                  <li className="list-group-item mt-1 p-0 fw-bold" style={{ ...inputMyStyle, border: 'none', letterSpacing: ".5px" }}>{profileData.user ? profileData.user.batch : ''}</li>
+                  <li className="list-group-item mt-3 p-0" style={{ ...inputMyStyle, border: 'none', letterSpacing: ".5px" }}>Address</li>
+                  <li className="list-group-item mt-1 p-0 fw-bold" style={{ ...inputMyStyle, border: 'none', letterSpacing: ".5px" }}>{profileData.user ? profileData.user.address : ''}</li>
+                  <li className="list-group-item mt-3 p-0" style={{ ...inputMyStyle, border: 'none', letterSpacing: ".5px" }}>Mobile</li>
+                  <li className="list-group-item mt-1 p-0 fw-bold mb-4" style={{ ...inputMyStyle, border: 'none', letterSpacing: ".5px" }}>{profileData.user ? profileData.user.phone : ''}</li>
                 </ul>
               </div>
             </div>
             <div className="col-md-8">
               <div>
-                <button className="btn shadow-none" onClick={handleShow} style={{ position: "fixed", bottom: 'calc(3rem + 1vw)', right: 'calc(1rem + 1vw)', backgroundColor: "orange", fontWeight: '500', color: '#404040' }} >New Requests {<span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                <button className="btn shadow-none" onClick={handleShow} style={{ position: "fixed", bottom: 'calc(3rem + 1vw)', right: 'calc(1rem + 1vw)', backgroundColor: "orange", fontWeight: '500', color: '#404040' }} >New Requests {pendingRequestsToMe!==0 && <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                   {pendingRequestsToMe}
                 </span>}</button>
 
-                <div className="mt-3">
+                <div>
+                  <div className="row p-3 mx-1" style={{ ...inputMyStyle ,borderRadius:"10px"}}>
                   <h2>Your Books</h2>
-                  <div className="row p-3 mx-1" style={{ ...inputMyStyle }}>
                     {profileData.product.length === 0 && <p className="fs-5 fst-italic">No books show</p>}
                     {profileData.product.map((ele, index) => {
                       return <div className="col-md-3 my-3 d-flex justify-content-center" key={index}>
-                        <div style={{ borderRadius: "5px", boxShadow: "0 0 8px grey", ...myStyle }}>
-                          <img src={ele.photo1} alt="" style={{ width: 'calc(15rem - 3vw)', height: 'calc(13rem - 3vw)', borderTopLeftRadius: "5px", borderTopRightRadius: '5px' }} />
-                          <h5 className="text-center py-1">{ele.name}</h5>
-                          <h6 className="text-center">Owner : {(ele.owner.id === ele.current_owner.id) ? 'You' : (ele.owner.first_name + ' ' + ele.owner.last_name)}</h6>
+                        <div style={{ borderRadius: "10px", boxShadow: `0 0 6px 1px` }}>
+                          <img src={ele.photo1} alt="" style={{ width: 'calc(15rem - 3vw)', height: 'calc(13rem - 3vw)', borderTopLeftRadius: "10px", borderTopRightRadius: '10px' }} />
+                          <h5 className="text-center py-1">{capitalize(ele.name)}</h5>
+                          <h6 className="text-center">Owner : {(ele.owner.id === ele.current_owner.id) ? 'You' : (capitalize(ele.owner.first_name) + ' ' + capitalize(ele.owner.last_name))}</h6>
                           <h6 className="text-center mt-3">
                             <span>Set Availability : </span>
-                            <button style={{border:`${ele.available===true?`2px solid ${theme==='light'?'black':'white'}`:'none'}`,background:"green",borderRadius:"50%",padding:'0px 8px',cursor:'pointer',margin:'0 .3rem'}} onClick={handleAvailability(true)}>&nbsp;</button>
-                            <button style={{border:`${ele.available===false?`2px solid ${theme==='light'?'black':'white'}`:'none'}`,background:"red",borderRadius:"50%",padding:'0px 8px',cursor:'pointer'}} onClick={handleAvailability(false)}>&nbsp;</button>
+                            <button disabled={ele.available===true?true:false} style={{border:`${ele.available===true?`2px solid ${theme==='light'?'black':'white'}`:'none'}`,background:"green",borderRadius:"50%",padding:'0px 8px',margin:'0 .3rem'}} onClick={()=>{handleAvailability(ele.id)}}>&nbsp;</button>
+                            <button disabled={ele.available===false?true:false} style={{border:`${ele.available===false?`2px solid ${theme==='light'?'black':'white'}`:'none'}`,background:"red",borderRadius:"50%",padding:'0px 8px'}} onClick={()=>{handleAvailability(ele.id)}}>&nbsp;</button>
                             </h6>
                         </div>
                       </div>
