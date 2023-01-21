@@ -44,14 +44,18 @@ export const AuthProvider = ({ children }) => {
 
     const registerUser = async (credential) => {
         setLoading(true)
-        let url = baseurl + 'auth/register/'
-        const response = await axios.post(url, credential)
-        if (response.status === 201) {
-            history("/login");
-        } else {
+        try {
+            let url = baseurl + 'auth/register/'
+            const response = await axios.post(url, credential)
+            if (response.status === 201) {
+                history("/login");
+            }
+            setLoading(false)
+        }
+        catch (err) {
+            setLoading(false)
             alert("Something went wrong!");
         }
-        setLoading(false)
     };
 
     const logoutUser = () => {

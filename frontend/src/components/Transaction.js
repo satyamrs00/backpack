@@ -17,7 +17,7 @@ export default function Transaction() {
   const [requestUser, setRequestUser] = useState('request_to_me')
 
   const [myStyle2, setMyStyle2] = useState({
-    background: 'rgb(240 240 240)',
+    background: 'rgb(210 230 230)',
     color: '#181818',
   })
   const [inputStyle2, setInputStyle2] = useState({
@@ -38,7 +38,7 @@ export default function Transaction() {
     }
     else {
       setMyStyle2({
-        background: 'rgb(240 240 240)',
+        background: 'rgb(210 230 230)',
         color: 'black'
       })
       setInputStyle2({
@@ -53,7 +53,7 @@ export default function Transaction() {
       {(loading || Object.keys(profileData).length === 0) && <Loading />}
       {(!loading && Object.keys(profileData).length !== 0) &&
         <div className='container p-3' style={{ ...myStyle, borderRadius: "10px" }}>
-          <div className='container' style={{ borderRadius: "10px" }}>
+          <div className='container p-1' style={{ borderRadius: "10px",...myStyle2 }}>
             <div className="text-center mb-3"><h3>{requestUser === 'request_to_me' ? 'Requests to me' : 'My requests'}</h3></div>
             <div className="row" style={{borderRadius:"10px"}}>
               <div className={`${window.screen.width > 990 ? 'col-lg-3 d-flex align-items-center' : 'd-none'} text-${theme === 'light' ? 'dark' : 'light'}`}></div>

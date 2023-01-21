@@ -8,7 +8,7 @@ const lottie = () => {
   "height": "100%",
   }
   return (
-    <div style={{width:"100%"}}>
+    <div>
       <Player
         autoplay
         loop

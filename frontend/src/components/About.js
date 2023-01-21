@@ -10,9 +10,9 @@ const About = () => {
         <div className="row py-4 ">
           <div className="col-md-6 align-items-center d-flex" style={{padding:'0 calc(2.5rem)'}}>
             <div >
-              <h3>The community is here to <br/>help</h3>
+              <h3>The college community is here <br/>to help</h3>
               <p className="mt-4 fs-5 opacity-75">
-               Be the part of a sharing community which helps <br/> each other through books
+               Be the part of a sharing college community which<br/>helps each other through books
               </p>
             </div>
           </div>
@@ -34,7 +34,7 @@ const About = () => {
             <div >
             <h3>A decentralised library<br/> for everyone</h3>
             <p className="mt-4 fs-5 opacity-75" >
-            Find your favourite books from the ease of your<br/> home without spending any money .<br/><b>!! Yes it is a library...</b>
+            Find your favourite books from comfort of your<br/> home without spending any money .<br/>
             </p>
             </div>
           </div>
