@@ -8,7 +8,7 @@ import ThemeContext from '../context/ThemeContext';
 import Loading from './Loading'
 
 export default function Product() {
-    const { checkUser, loading, setLoading } = useContext(AuthContext)
+    const { checkUser, loading } = useContext(AuthContext)
     //eslint-disable-next-line
     useEffect(() => { checkUser() }, [])
 

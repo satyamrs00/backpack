@@ -2,7 +2,6 @@ import { createContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { baseurl } from "../baseurl";
-import useAxios from "../utils/useAxios";
 import axios from "axios";
 
 const AuthContext = createContext();
@@ -51,10 +50,19 @@ export const AuthProvider = ({ children }) => {
                 history("/login");
             }
             setLoading(false)
+            return 'registered'
         }
         catch (err) {
             setLoading(false)
+            let errMsg=err.response.data
+            if((errMsg.username?errMsg.username[0]:'')==='A user with that username already exists.'){
+                return 'userexist'
+            }
+            else if((errMsg.password?errMsg.password[0]:'')==='This password is too common.'){
+                return 'passCommon'
+            }
             alert("Something went wrong!");
+            return 'something went wrong!'
         }
     };
 

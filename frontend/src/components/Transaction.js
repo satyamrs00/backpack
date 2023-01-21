@@ -10,7 +10,7 @@ export default function Transaction() {
   const { checkUser } = useContext(AuthContext)
   //eslint-disable-next-line
   useEffect(() => { checkUser() })
-  const { myStyle, inputStyle, theme } = useContext(ThemeContext)
+  const { myStyle, theme } = useContext(ThemeContext)
   const { loading } = useContext(AuthContext)
   const { profileData } = useContext(ProductContext)
   const [filterQuery, setFilterQuery] = useState('')

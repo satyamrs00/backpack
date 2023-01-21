@@ -17,7 +17,7 @@ const About = () => {
             </div>
           </div>
           <div className="col-md-6" style={{padding:'0 2.5vw'}}>
-            <img src={booksharing} style={{ width: "100%",height:'20rem'}} />
+            <img src={booksharing} style={{ width: "100%",height:'20rem'}} alt=''/>
           </div>
         </div>
       </div>
