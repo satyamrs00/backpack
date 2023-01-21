@@ -43,7 +43,10 @@ body{
       padding-top: 7rem;
     }
     .lottie-col{
-      transform: translateX(3rem);
+      transform: translate(3rem,1rem);
+    }
+    .heroBtn{
+      transform: translateY(-1rem);
     }
 } 
 @media (max-width : 550px)

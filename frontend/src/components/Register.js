@@ -1,5 +1,5 @@
-import React, { useRef, useState, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useRef, useState, useContext ,useEffect} from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import image from './images/bookbg.png'
 import showeye from './images/showeye.png'
 import hideeye from './images/hideeye.png'
@@ -10,7 +10,9 @@ import Loading from './Loading'
 import collegenames from '../colleges/collegenames'
 
 export default function Register() {
-    const { registerUser, loading } = useContext(AuthContext);
+    const { registerUser, loading,user } = useContext(AuthContext);
+    const navigate = useNavigate()
+    useEffect(() => { if (user) { navigate('/') } }, [])
     const { theme, myStyle, inputStyle } = useContext(ThemeContext)
 
     const passRef = useRef(null)
@@ -70,7 +72,7 @@ export default function Register() {
                                 </div>
                                 <div className="row">
                                     <div className="mb-4 col-md-6 form-floating">
-                                        <input type={ishide ? 'password' : 'text'} name='password' className="form-control border-0 shadow-sm" placeholder='Password' onChange={handleOnChange} required ref={passRef} pattern='(?=.*\d)(?=.*[a-z]).{8,}' title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" style={{ ...inputStyle }} />
+                                        <input type={ishide ? 'password' : 'text'} name='password' className="form-control border-0 shadow-sm" placeholder='Password' onChange={handleOnChange} required ref={passRef} pattern='(?=.*[A-Z])(?=.*\d)(?=.*[a-z]).{8,}' title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" style={{ ...inputStyle }} />
                                         <label htmlFor="password" className='px-4'>Password *</label>
                                         <img src={ishide ? hideeye : showeye} alt={ishide ? 'show' : 'hide'} title={ishide ? 'show' : 'hide'} style={{ cursor: 'pointer', position: 'absolute', right: '1.5rem', bottom: '1rem', width: '18px' }} onClick={() => setIsHide(e => !e)} />
                                     </div>
@@ -108,7 +110,7 @@ export default function Register() {
                                     </div>
                                 </div>
                                 <div className={`mb-4 shadow-sm py-4 px-3 text-${theme === 'light' ? 'dark' : 'light'}`} style={{ ...inputStyle }}>
-                                    <span>Profile : * </span><label><span className='fileInpStyleBtn ms-1'><i className="fa-solid fa-upload me-1"></i>Upload Profile</span><input type="file" name="profile_pic" className='fileInpBtn ms-2' onChange={(e) => { formData.append('profile_pic', e.target.files[0]) }} /></label>
+                                    <span>Profile : * </span><label><span className='fileInpStyleBtn ms-1'><i className="fa-solid fa-upload me-1"></i>Upload Profile</span><input type="file" name="profile_pic" className='fileInpBtn ms-2' onChange={(e) => { formData.append('profile_pic', e.target.files[0]) }} required/></label>
                                 </div>
                                 <div className="mb-4 form-check">
                                     <input type="checkbox" className="form-check-input shadow-none" style={{ cursor: "pointer" }} required/>

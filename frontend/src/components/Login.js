@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import image from './images/bookbg2.png'
 import showeye from './images/showeye.png'
 import hideeye from './images/hideeye.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { loadCaptchaEnginge, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import AuthContext from "../context/AuthContext";
 import ThemeContext from '../context/ThemeContext'
@@ -10,7 +10,9 @@ import '../App.css'
 import Loading from './Loading'
 
 export default function Login() {
-    const { loginUser, loading } = useContext(AuthContext);
+    const navigate = useNavigate()
+    const { loginUser, loading, user } = useContext(AuthContext);
+    useEffect(() => { if (user) { navigate('/') } }, [])
     const { theme, myStyle, inputStyle } = useContext(ThemeContext)
 
     const captchaRef = useRef(null)
@@ -71,8 +73,8 @@ export default function Login() {
                                     <img src={ishide ? hideeye : showeye} alt={ishide ? 'show' : 'hide'} title={ishide ? 'show' : 'hide'} style={{ cursor: 'pointer', position: 'absolute', right: '1.5rem', bottom: '1rem', width: '18px' }} onClick={() => setIsHide(e => !e)} />
                                 </div>
                                 <div style={{ fontSize: '1rem', marginBottom: 'calc(2vw)' }} >
-                                    <div style={{height:'2.5rem'}}>
-                                    <LoadCanvasTemplateNoReload />
+                                    <div style={{ height: '2.5rem' }}>
+                                        <LoadCanvasTemplateNoReload />
                                     </div>
                                     <label htmlFor="captchaInp" className='mt-2'>Enter security code : &nbsp;</label>
                                     <input type="text" className="form-control shadow-sm border-0" name='captchaInp' style={{ width: 'calc(6rem + 4vw)', padding: '5px 10px', display: 'inline-block', ...inputStyle }} ref={captchaRef} required />&nbsp;

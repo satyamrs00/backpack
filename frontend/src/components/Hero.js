@@ -25,10 +25,10 @@ const Hero = () => {
                         </p>
                         <p className="ms-1 opacity-75 fw-bold"> Lorem Ipsum has been the industry's standard dummy <br />text ever since the 1500s, when an unknown printer took <br />a galle
                         </p>
-                        <Link className={`btn btn-outline-${theme==='light'?'dark':"light"} btn-lg mt-3 text-center shadow-none`} to={!user?'/register':'/lendbook'}>{!user?'Get Started':'Help Others'}</Link>
+                        <Link className={`heroBtn btn btn-outline-${theme==='light'?'dark':"light"} btn-lg mt-3 text-center shadow-none`} to={!user?'/register':'/lendbook'}>{!user?'Get Started':'Help Others'}</Link>
                     </div>
                 </div>
-                <div className="col-md-6 text-center lottie-col">
+                <div className="col-md-6 text-center lottie-col w-100">
                     <Lottie />
                 </div>
             </div>
