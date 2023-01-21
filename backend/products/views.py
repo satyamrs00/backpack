@@ -52,7 +52,13 @@ class ProductViewSet(generics.CreateAPIView):
     
     def put(self, request, *args, **kwargs):
         self.permission_classes = [IsAuthenticated, IsCurrentOwner]
-        Product.objects.filter(id=request.data["product"]).update(available=True)
+        current_product = Product.objects.get(id=request.data["id"])
+        if request.data["available"] == False:
+            current_product.available = False
+        else:
+            current_product.available = True
+        current_product.save()
+        # Product.objects.filter(id=request.data["product"]).update(available=True)
         product = Product.objects.get(id=request.data["product"])
         product_serializer = ProductSerializer(product)
         return Response(product_serializer.data, status=status.HTTP_200_OK)
