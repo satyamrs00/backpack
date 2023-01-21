@@ -52,7 +52,7 @@ class ProductViewSet(generics.CreateAPIView):
     
     def put(self, request, *args, **kwargs):
         self.permission_classes = [IsAuthenticated, IsCurrentOwner]
-        current_product = Product.objects.get(id=request.data["id"])
+        current_product = Product.objects.get(id=request.data["product"])
         if request.data["available"] == False:
             current_product.available = False
         else:
