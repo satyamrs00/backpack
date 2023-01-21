@@ -62,7 +62,7 @@ export default function ProductDetails() {
                 <div style={{ ...myStyle, boxShadow: '0 0 10px grey', padding: '1.5rem', border: "4px outset lightgrey" }} className='container rounded-3'>
                     <div className="row">
                         <div className={`col-${window.screen.width > 900 ? 6 : 12} d-flex justify-content-center rounded`} style={{marginBottom:"calc(1.5rem - 1.5vw)"}}>
-                            <Carousel images={imageArr} width='calc(10rem + 25vw)' height='calc(12rem + 23vw)' />
+                            <Carousel images={imageArr} width='calc(12rem + 23vw)' height='calc(12rem + 23vw)' />
                         </div>
                         <div style={{ fontFamily: 'Roboto Slab', position: "relative",...myStyle2 }} className={`col-${window.screen.width > 900 ? 6 : 12}`}>
                             <div className='row' style={{ padding: '1rem 1.5rem .1rem 1.5rem'}}>
@@ -74,15 +74,10 @@ export default function ProductDetails() {
                                 <p style={{ fontSize: 'calc(.9rem + .2vw)',fontWeight:"600",wordBreak:'break-all' }}>{data.description}</p>
                             </div>
                             <div style={{ padding: '0rem 1.5rem .5rem 1.5rem' }}>
-                                <h6 style={{ fontSize: 'calc(1rem + .1vw)', letterSpacing: '.5px' }}>Owner Details</h6>
-                                Name : <span style={{ fontSize: 'calc(1rem + .1vw)', fontWeight: '600' }}>{capitalize(data.owner.first_name) + " " + capitalize(data.owner.last_name)}</span>
-                                <br />
-                                Batch : <span style={{ fontSize: 'calc(1rem + .1vw)', fontWeight: '600' }}>{data.owner.batch}</span>
-                                <br /><br />
                                 <h6 style={{ fontSize: 'calc(1rem + .1vw)', letterSpacing: '.5px' }}>Current Owner Details</h6>
-                                Name : <span style={{ fontSize: 'calc(1rem + .1vw)', fontWeight: '600' }}>{capitalize(data.current_owner.first_name) + " " + capitalize(data.current_owner.last_name)}</span>
-                                <br /> 
-                                Batch : <span style={{ fontSize: 'calc(1rem + .1vw)', fontWeight: '600' }}>{data.current_owner.batch}</span>
+                               <p className='mb-1'> Name : <span style={{ fontSize: 'calc(1rem + .1vw)', fontWeight: '600' }}>{capitalize(data.current_owner.first_name) + " " + capitalize(data.current_owner.last_name)}</span></p>
+                               <p className='mb-1'> Username : <span style={{ fontSize: 'calc(1rem + .1vw)', fontWeight: '600' }}>{data.current_owner.username}</span></p>
+                               <p className='mb-1'> Batch : <span style={{ fontSize: 'calc(1rem + .1vw)', fontWeight: '600' }}>{data.current_owner.batch}</span></p>
                             </div>
                             <div className={`${window.screen.width>992?'position-absolute':''} bottom-0`} style={{ width: '97%' }}>
                                 <div className="footer d-flex justify-content-end" style={{ backgroundColor: 'rgb(187 187 187)', padding: '.5rem 1rem',marginBottom:".5rem" }}>

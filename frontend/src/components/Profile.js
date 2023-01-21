@@ -135,16 +135,17 @@ const Profile = () => {
                   <div className="row p-3 mx-1" style={{ ...inputMyStyle ,borderRadius:"10px"}}>
                   <h2>Your Books</h2>
                     {profileData.product.length === 0 && <p className="fs-5 fst-italic">No books show</p>}
+                    {console.log(profileData)}
                     {profileData.product.map((ele, index) => {
                       return <div className="col-md-3 my-3 d-flex justify-content-center" key={index}>
-                        <div style={{ borderRadius: "10px", boxShadow: `0 0 6px 1px` }}>
+                        <div style={{ borderRadius: "10px", boxShadow: `0 0 7px 0px` }}>
                           <img src={ele.photo1} alt="" style={{ width: 'calc(15rem - 3vw)', height: 'calc(13rem - 3vw)', borderTopLeftRadius: "10px", borderTopRightRadius: '10px' }} />
                           <h5 className="text-center py-1">{capitalize(ele.name)}</h5>
-                          <h6 className="text-center">Owner : {(ele.owner.id === ele.current_owner.id) ? 'You' : (capitalize(ele.owner.first_name) + ' ' + capitalize(ele.owner.last_name))}</h6>
-                          <h6 className="text-center mt-3">
+                          {/* <h6 className="text-center">Owner : {(ele.owner.id === ele.current_owner.id) ? 'You' : (capitalize(ele.owner.first_name) + ' ' + capitalize(ele.owner.last_name))}</h6> */}
+                          <h6 className="text-center mt-2">
                             <span>Set Availability : </span>
-                            <button disabled={ele.available===true?true:false} style={{border:`${ele.available===true?`2px solid ${theme==='light'?'black':'white'}`:'none'}`,background:"green",borderRadius:"50%",padding:'0px 8px',margin:'0 .3rem'}} onClick={()=>{handleAvailability(ele.id)}}>&nbsp;</button>
-                            <button disabled={ele.available===false?true:false} style={{border:`${ele.available===false?`2px solid ${theme==='light'?'black':'white'}`:'none'}`,background:"red",borderRadius:"50%",padding:'0px 8px'}} onClick={()=>{handleAvailability(ele.id)}}>&nbsp;</button>
+                            <button disabled={ele.available===true?true:false} style={{border:`${ele.available===true?`2px solid ${theme==='light'?'#181818':'white'}`:'none'}`,background:"green",borderRadius:"50%",padding:'0px 7px',margin:'0 .3rem'}} onClick={()=>{handleAvailability(ele.id)}}>&nbsp;</button>
+                            <button disabled={ele.available===false?true:false} style={{border:`${ele.available===false?`2px solid ${theme==='light'?'#181818':'white'}`:'none'}`,background:"red",borderRadius:"50%",padding:'0px 7px'}} onClick={()=>{handleAvailability(ele.id)}}>&nbsp;</button>
                             </h6>
                         </div>
                       </div>

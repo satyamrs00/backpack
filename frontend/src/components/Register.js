@@ -38,10 +38,7 @@ export default function Register() {
         for (const ele in credential) {
             formData.append(ele, credential[ele])
         }
-        // registerUser(formData);
-        for(let pair of formData.entries()){
-            console.log(pair[0],pair[1])
-        }
+        registerUser(formData);
     }
 
     return (
