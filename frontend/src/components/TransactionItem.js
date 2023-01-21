@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react'
 export default function TransactionItem(props) {
     const ele=props.ele
     const owner=props.owner
+    const capitalize=(str)=>{
+        return (str[0].toUpperCase() + str.slice(1))
+    }
     const [myColor,setMyColor]=useState({color:"black"})
     useEffect(()=>{
         if(ele.status==='accepted'){
@@ -26,7 +29,7 @@ export default function TransactionItem(props) {
             </div>
             <div className='col-lg-5'>
                 <h6>{props.ownerType} Details</h6>
-                <p className="p-0 m-0">Name : {owner.first_name} {owner.last_name}</p>
+                <p className="p-0 m-0">Name : {capitalize(owner.first_name)} {capitalize(owner.last_name)}</p>
                 <p className="p-0 m-0">Username: {owner.username}</p>
                 <p className="p-0 m-0">Batch : {owner.batch}</p>
                 <p className="p-0 m-0">Email : {owner.email}</p>

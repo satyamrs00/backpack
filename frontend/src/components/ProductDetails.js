@@ -15,6 +15,9 @@ export default function ProductDetails() {
     const { checkUser, loading } = useContext(AuthContext)
     // eslint-disable-next-line
     useEffect(() => { checkUser() }, [])
+    const capitalize=(str)=>{
+        return (str[0].toUpperCase() + str.slice(1))
+    }
 
     const location = useLocation()
     const data = location.state.object
@@ -44,11 +47,11 @@ export default function ProductDetails() {
                         </div>
                         <div style={{ fontFamily: 'serif' }} className={`col-${window.screen.width > 900 ? 6 : 12}`}>
                             <div className='row' style={{ padding: '1rem 1.5rem .1rem 1.5rem' }}>
-                                <h5 className='col' style={{ fontSize: 'calc(1.7rem + .3vw)' }}>{data.name}</h5>
+                                <h5 className='col' style={{ fontSize: 'calc(1.7rem + .3vw)' }}>{capitalize(data.name)}</h5>
                                 <img className='col-2' src={data.available ? available : notavailable} alt={data.available ? 'available' : 'not available'} style={{ width: 'calc(3.5rem + .5vw)', height: "calc(2rem + .5vw)" }} />
                             </div>
                             <div style={{ padding: '1rem 1.5rem .5rem 1.5rem' }}>
-                                <h6 style={{ fontSize: 'calc(1rem + .3vw)', fontWeight: '600' }}>Description</h6>
+                                <h6 style={{ fontSize: 'calc(1rem + .3vw)', fontWeight: '600',letterSpacing:'.5px' }}>Description</h6>
                                 <p style={{ fontSize: 'calc(.9rem + .3vw)' }}>{data.description}</p>
                             </div>
                             <div style={{ padding: '0rem 1.5rem .5rem 1.5rem' }}>

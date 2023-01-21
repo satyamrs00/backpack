@@ -63,7 +63,7 @@ export default function Product() {
             {/* onKeyUp={(e) => { if (e.key === 'Enter') { handleSearch() } }} */}
             {loading && <Loading />}
             {!loading &&
-                <div style={{ ...myStyle, margin: 'calc(1rem + 2vw) calc(.1rem + 2vw)', boxShadow: '0 0 15px grey', borderRadius: "5px" }}>
+                <div style={{ ...myStyle, margin: 'calc(1rem + 2vw) calc(.1rem + 2vw) -1rem calc(.1rem + 2vw)', boxShadow: '0 0 15px grey', borderRadius: "5px" }}>
                     <div className="d-flex justify-content-center">
                         <div style={{ width: 'calc(10rem + 30vw)', position: 'relative' }}>
                             <input type="text" name="search" id="search" className='mb-2 mt-4' style={{ borderRadius: '20px', color: '#6a6a6a', width: '100%', border: "none", outline: 'none', borderBottom: "2px solid grey", boxShadow: "0 0 5px grey", fontSize: 'calc(1rem + .1vw)', padding: '.4rem 1.2rem', fontFamily: 'serif' }} placeholder='Search here' onChange={(e) => { setSearchQuery(e.target.value) }} />
@@ -80,7 +80,7 @@ export default function Product() {
                         })}
                     </div>
                     <h6 className='mx-4 my-3 pb-3'>Could not find your book above ? <button className="btn btnBg btn-sm shadow-sm" style={{ marginTop: 'calc(.5rem - .5vw)' }} onClick={handleShow}>Let us know</button></h6>
-                </div>
+                    </div>
             }
         </>
     )
