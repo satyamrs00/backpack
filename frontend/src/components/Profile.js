@@ -132,7 +132,7 @@ const Profile = () => {
                 </span>}</button>
 
                 <div>
-                  <div className="row p-3 mx-1" style={{ ...inputMyStyle ,borderRadius:"10px"}}>
+                  <div className="row p-3 mx-1" style={{ marginTop:'calc(2rem - 2vw)',...inputMyStyle ,borderRadius:"10px"}}>
                   <h2>Your Books</h2>
                     {profileData.product.length === 0 && <p className="fs-5 fst-italic">No books show</p>}
                     {console.log(profileData)}

@@ -5,6 +5,7 @@ import ThemeContext from '../context/ThemeContext'
 import Modal from 'react-bootstrap/Modal';
 import sun from './images/sun.png'
 import moon from './images/moon.png'
+import logo from './images/logo.png'
 import '../App.css'
 import ProductContext from '../context/ProductContext';
 
@@ -69,7 +70,8 @@ export default function Navbar(props) {
             {/* Navbar */}
             <nav className="navbar navbar-expand-lg sticky-top py-1" style={{ ...myStyle }}>
                 <div className="container-fluid position-relative" >
-                    <Link className={`navbar-brand text-${theme === 'light' ? 'dark' : 'light'}`} style={{ fontWeight: '500', fontSize: 'calc(1.8rem + .8vw)', marginLeft: '1.5vw', fontFamily: 'sans-serif' }} to='/'>BackPack</Link>
+                    <img src={logo} alt="" width="40" height="40" className="d-inline-block align-text-top" style={{marginLeft:"1.5vw"}}/>
+                    <Link className={`me-auto navbar-brand text-${theme === 'light' ? 'dark' : 'light'}`} style={{ fontWeight: '500', fontSize: 'calc(1.8rem + .8vw)', marginLeft: 'calc(.5rem + .5vw)', fontFamily: 'sans-serif' }} to='/'>BackPack</Link>
                     <button className="navbar-toggler shadow-sm border-0 menuBtn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style={{ ...myStyle }}>
                         <i className="fa-solid fa-caret-down"></i>
                         <i className="fa-solid fa-caret-up"></i>
