@@ -5,6 +5,7 @@ import available from './images/available.png'
 import notavailable from './images/notavailable.png'
 import AuthContext from "../context/AuthContext";
 import ThemeContext from '../context/ThemeContext'
+import ProductContext from '../context/ProductContext'
 import Loading from './Loading'
 import useAxios from "../utils/useAxios";
 import { baseurl } from '../baseurl'
@@ -12,7 +13,8 @@ import { baseurl } from '../baseurl'
 export default function ProductDetails() {
     const api = useAxios()
     const {theme,myStyle} = useContext(ThemeContext)
-    const { checkUser, loading } = useContext(AuthContext)
+    const { checkUser, loading ,setLoading} = useContext(AuthContext)
+    const {profileData,profile}=useContext(ProductContext)
     // eslint-disable-next-line
     useEffect(() => { checkUser() }, [])
     const capitalize = (str) => {
@@ -29,11 +31,13 @@ export default function ProductDetails() {
     if (data.photo5) { imageArr.push(data.photo5) }
     const formData = new FormData()
     const handleClick = async (e) => {
+        setLoading(true)
         e.target.innerText = 'Requested'
         e.target.disabled = 'true'
         formData.append('product', data.id)
         let url = baseurl + 'api/request-product/'
         await api.post(url, formData)
+        profile()
     }
 
     const [myStyle2, setMyStyle2] = useState({
@@ -54,6 +58,15 @@ export default function ProductDetails() {
             })
         }
     }, [theme])
+
+    const [alreadyRequested,setAlreadyRequested]=useState(false)
+    useEffect(()=>{
+        setLoading(true);
+        (Object.keys(profileData).length!==0?profileData.my_request:[]).map((ele,index)=>{
+            if(ele.status==='pending' && ele.product.id===data.id){setAlreadyRequested(true)}
+        })
+        setLoading(false);
+    },[profileData])
 
     return (
         <>
@@ -81,7 +94,8 @@ export default function ProductDetails() {
                             </div>
                             <div className={`${window.screen.width>992?'position-absolute':''} bottom-0`} style={{ width: '97%' }}>
                                 <div className="footer d-flex justify-content-end" style={{ backgroundColor: 'rgb(187 187 187)', padding: '.5rem 1rem',marginBottom:".5rem" }}>
-                                    {data.available && <button className='btn shadow-sm' style={{ backgroundColor: "orange", fontWeight: '600', color: '#404040' }} onClick={handleClick}>Request Book</button>}
+                                    {!alreadyRequested && data.available && <button className='btn shadow-sm' style={{ backgroundColor: "orange", fontWeight: '600', color: '#404040' }} onClick={handleClick}>Request Book</button>}
+                                    {alreadyRequested && data.available && <button className='btn shadow-sm' disabled={true} style={{ backgroundColor: "orange", fontWeight: '600', color: '#404040' }}>Requested</button>}
                                     {!data.available && <span className='text-danger p-1'>Currently unavailable</span>}
                                 </div>
                             </div>

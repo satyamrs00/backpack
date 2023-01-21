@@ -135,7 +135,6 @@ const Profile = () => {
                   <div className="row p-3 mx-1" style={{ marginTop:'calc(2rem - 2vw)',...inputMyStyle ,borderRadius:"10px"}}>
                   <h2>Your Books</h2>
                     {profileData.product.length === 0 && <p className="fs-5 fst-italic">No books show</p>}
-                    {console.log(profileData)}
                     {profileData.product.map((ele, index) => {
                       return <div className="col-md-3 my-3 d-flex justify-content-center" key={index}>
                         <div style={{ borderRadius: "10px", boxShadow: `0 0 7px 0px` }}>
