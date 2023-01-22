@@ -83,11 +83,11 @@ const Profile = () => {
                 return <div key={index} className="border border-light py-2 px-3 rounded mb-4" style={{ background: 'lightgrey' }}>
                   <h5>A new request for your "{ele.product.name}" book</h5>
                   <h6>Requesting User Details</h6>
-                  <p className="p-0 m-0">Name : {ele.fromOwner.first_name} {ele.fromOwner.last_name}</p>
-                  <p className="p-0 m-0">Username: {ele.fromOwner.username}</p>
-                  <p className="p-0 m-0">Batch : {ele.fromOwner.batch}</p>
-                  <p className="p-0 m-0">Email : {ele.fromOwner.email}</p>
-                  <p className="p-0 m-0">Address : {ele.fromOwner.address}</p>
+                  <p className="p-0 m-0">Name : {ele.toOwner.first_name} {ele.toOwner.last_name}</p>
+                  <p className="p-0 m-0">Username: {ele.toOwner.username}</p>
+                  <p className="p-0 m-0">Batch : {ele.toOwner.batch}</p>
+                  <p className="p-0 m-0">Email : {ele.toOwner.email}</p>
+                  <p className="p-0 m-0">Address : {ele.toOwner.address}</p>
                   <div className="d-flex justify-content-end">
                     <button className='btn btn-success shadow-sm me-2' onClick={() => { handleClose(); handleAcceptReject(ele.id, 'accepted'); }}>Accept</button>
                     <button className='btn btn-danger shadow-sm' onClick={() => { handleClose(); handleAcceptReject(ele.id, 'rejected'); }}>Decline</button>
