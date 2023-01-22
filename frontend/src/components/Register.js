@@ -107,7 +107,7 @@ export default function Register() {
                                 </div>
                                 <div className="row">
                                     <div className="mb-4 col-md-6 form-floating">
-                                        <input type="" name='batch' className="form-control border-0 shadow-sm" placeholder='Batch' min={1950} onChange={handleOnChange} required />
+                                        <input type="" name='batch' className="form-control border-0 shadow-sm" placeholder='Batch' onChange={handleOnChange} required />
                                         <label htmlFor="batch" className='px-4'>Batch *</label>
                                     </div>
                                     <div className="mb-4 col-md-6 form-floating">
