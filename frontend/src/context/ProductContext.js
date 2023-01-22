@@ -28,7 +28,7 @@ export const ProductProvider = ({ children }) => {
         let url = baseurl + 'api/products/'
         try {
             const response = await api.post(url, details)
-            navigate('/product')
+            navigate('/profile')
             getallproducts()
         }
         catch (err) {
