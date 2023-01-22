@@ -45,7 +45,7 @@ const Testimonials = () => {
           <div className="carousel-item active">
             <div className="text-center">
               <img src="https://media.istockphoto.com/id/1141737652/photo/portrait-of-a-confident-young-man.jpg?b=1&s=170667a&w=0&k=20&c=Y9fE0UrJiqEADUBx5ccBkExhSmnV5eyQ9kPMeGecGoM=" alt="" className="mt-5" style={{ width: "calc(10rem + 10vw)", height: "20%", borderRadius: '20px' }} />
-              <p className="my-5" style={{position:'relative', margin: '0 1vw', fontSize: 'calc(.9rem + .7vw)', padding: '0 calc(1rem + 6vw)', fontFamily: "'Montserrat', sans-serif" }} >"I can't thank Backpack enough . They provided me books when I needed them the most, that too free.
+              <p className="my-5" style={{position:'relative', margin: '0 1vw', fontSize: 'calc(.9rem + .7vw)', padding: '0 calc(1rem + 6vw)', fontFamily: "'Montserrat', sans-serif" }} >"I can't thank BackPack enough . They provided me books when I needed them the most, that too free.
                 It also helped me to make new connections with the people pursuing same courses."
                 <br />
                 <span style={{fontSize:'calc(.8rem + .7vw)',fontStyle:"italic"}} className='auser'>- Vibhor Agrawal</span>
