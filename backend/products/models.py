@@ -5,7 +5,7 @@ import json
 
 # Create your models here.
 class Product(models.Model):
-    name = models.TimeField()
+    name = models.TextField()
     description = models.TextField()
     photo1 = models.ImageField(upload_to='product_pics',null=True)
     photo2 = models.ImageField(upload_to='product_pics',null=True)
