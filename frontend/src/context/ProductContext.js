@@ -75,7 +75,9 @@ export const ProductProvider = ({ children }) => {
         productdetails,
         profile,
         profileData,
+        setProfileData,
         productsData,
+        setProductsData,
         registerBook
     }
 

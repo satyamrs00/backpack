@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import AuthContext from "../context/AuthContext";
 import ThemeContext from '../context/ThemeContext'
 import Modal from 'react-bootstrap/Modal';
@@ -11,11 +11,12 @@ import ProductContext from '../context/ProductContext';
 
 export default function Navbar(props) {
     const { theme, toggleTheme } = useContext(ThemeContext)
-    const { user, logoutUser } = useContext(AuthContext)
-    const {profileData}=useContext(ProductContext)
+    const { user,setAuthTokens,setUser } = useContext(AuthContext)
+    const {profileData,setProductsData,setProfileData}=useContext(ProductContext)
     const capitalize=(str)=>{
         return (str[0].toUpperCase() + str.slice(1))
     }
+    const navigate=useNavigate()
     const location = useLocation()
     if (location.pathname === '/') document.title = 'BackPack - Home'
     else {
@@ -53,6 +54,16 @@ export default function Navbar(props) {
             })
         }
     }, [theme])
+
+    //logoutUser
+    const logoutUser = () => {
+        setProfileData({})
+        setProductsData([])
+        setAuthTokens(null);
+        setUser(null);
+        localStorage.removeItem("authTokens");
+        navigate("/login");
+    };
 
     return (
         <>

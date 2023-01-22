@@ -66,13 +66,6 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const logoutUser = () => {
-        setAuthTokens(null);
-        setUser(null);
-        localStorage.removeItem("authTokens");
-        history("/login");
-    };
-
     const checkUser = () => {
         if (!user) {
             history('/login')
@@ -86,7 +79,6 @@ export const AuthProvider = ({ children }) => {
         setAuthTokens,
         registerUser,
         loginUser,
-        logoutUser,
         checkUser,
         loading,
         setLoading
