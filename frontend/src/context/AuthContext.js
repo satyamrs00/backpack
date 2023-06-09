@@ -2,7 +2,6 @@ import { createContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { baseurl } from "../baseurl";
-import useAxios from "../utils/useAxios";
 import axios from "axios";
 
 const AuthContext = createContext();
@@ -44,21 +43,27 @@ export const AuthProvider = ({ children }) => {
 
     const registerUser = async (credential) => {
         setLoading(true)
-        let url = baseurl + 'auth/register/'
-        const response = await axios.post(url, credential)
-        if (response.status === 201) {
-            history("/login");
-        } else {
-            alert("Something went wrong!");
+        try {
+            let url = baseurl + 'auth/register/'
+            const response = await axios.post(url, credential)
+            if (response.status === 201) {
+                history("/login");
+            }
+            setLoading(false)
+            return 'registered'
         }
-        setLoading(false)
-    };
-
-    const logoutUser = () => {
-        setAuthTokens(null);
-        setUser(null);
-        localStorage.removeItem("authTokens");
-        history("/login");
+        catch (err) {
+            setLoading(false)
+            let errMsg=err.response.data
+            if((errMsg.username?errMsg.username[0]:'')==='A user with that username already exists.'){
+                return 'userexist'
+            }
+            else if((errMsg.password?errMsg.password[0]:'')==='This password is too common.'){
+                return 'passCommon'
+            }
+            alert("Something went wrong!");
+            return 'something went wrong!'
+        }
     };
 
     const checkUser = () => {
@@ -74,7 +79,6 @@ export const AuthProvider = ({ children }) => {
         setAuthTokens,
         registerUser,
         loginUser,
-        logoutUser,
         checkUser,
         loading,
         setLoading

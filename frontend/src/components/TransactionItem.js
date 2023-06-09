@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react'
 
 export default function TransactionItem(props) {
     const ele=props.ele
+    const owner=props.owner
+    const capitalize=(str)=>{
+        return (str[0].toUpperCase() + str.slice(1))
+    }
     const [myColor,setMyColor]=useState({color:"black"})
     useEffect(()=>{
         if(ele.status==='accepted'){
             setMyColor({color:"#009900"})
         }
         else if(ele.status==='pending'){
-            setMyColor({color:'rgb(206 206 5);'})
+            setMyColor({color:'rgb(206 206 5)'})
         }
         else{
             setMyColor({color:'red'})
@@ -24,13 +28,13 @@ export default function TransactionItem(props) {
                 <h6 className='mb-3'>Status : <span style={{...myColor}}>{ele.status}</span></h6>
             </div>
             <div className='col-lg-5'>
-                <h6>Requesting User Details</h6>
-                <p className="p-0 m-0">Name : {ele.fromOwner.first_name} {ele.fromOwner.last_name}</p>
-                <p className="p-0 m-0">Username: {ele.fromOwner.username}</p>
-                <p className="p-0 m-0">Batch : {ele.fromOwner.batch}</p>
-                <p className="p-0 m-0">Email : {ele.fromOwner.email}</p>
-                <p className="p-0 m-0">Address : {ele.fromOwner.address}</p>
+                <h6>{props.ownerType} Details</h6>
+                <p className="p-0 m-0">Name : {capitalize(owner.first_name)} {capitalize(owner.last_name)}</p>
+                <p className="p-0 m-0">Username: {owner.username}</p>
+                <p className="p-0 m-0">Batch : {owner.batch}</p>
+                <p className="p-0 m-0">Email : {owner.email}</p>
+                <p className="p-0 m-0">Address : {owner.address}</p>
             </div>
         </>
-    )
+    )           
 }

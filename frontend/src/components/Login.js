@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import image from './images/bookbg2.png'
 import showeye from './images/showeye.png'
 import hideeye from './images/hideeye.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { loadCaptchaEnginge, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import AuthContext from "../context/AuthContext";
 import ThemeContext from '../context/ThemeContext'
@@ -10,7 +10,9 @@ import '../App.css'
 import Loading from './Loading'
 
 export default function Login() {
-    const { loginUser, loading } = useContext(AuthContext);
+    const navigate = useNavigate()
+    const { loginUser, loading, user } = useContext(AuthContext);
+    useEffect(() => { if (user) { navigate('/') } }, [])
     const { theme, myStyle, inputStyle } = useContext(ThemeContext)
 
     const captchaRef = useRef(null)
@@ -55,7 +57,7 @@ export default function Login() {
             {!loading &&
                 <div className="container-fluid d-flex justify-content-center align-items-center p-4" style={{ minHeight: 'calc(30rem + 10vw)' }}>
                     <div className="container row w-80 justify-content-center align-items-center rounded" style={{ ...myStyle, boxShadow: '0 0 20px grey', padding: 'calc(1.5rem + 1vw) calc(.5rem + 2.5vw) calc(1rem) calc(.5rem + 2.5vw)' }}>
-                        <div className={`alert alert-danger d-${showError ? 'flex' : 'none'}`} role="alert">
+                        <div className={`alert alert-danger d-${showError ? 'block' : 'none'}`} role="alert">
                             <strong>Login Failed ! </strong>&nbsp; Please try to login with correct credentials
                         </div>
                         <div className={`col-${window.screen.width > 900 ? 6 : 12}`}>
@@ -71,8 +73,8 @@ export default function Login() {
                                     <img src={ishide ? hideeye : showeye} alt={ishide ? 'show' : 'hide'} title={ishide ? 'show' : 'hide'} style={{ cursor: 'pointer', position: 'absolute', right: '1.5rem', bottom: '1rem', width: '18px' }} onClick={() => setIsHide(e => !e)} />
                                 </div>
                                 <div style={{ fontSize: '1rem', marginBottom: 'calc(2vw)' }} >
-                                    <div style={{height:'2rem'}}>
-                                    <LoadCanvasTemplateNoReload />
+                                    <div style={{ height: '2.5rem' }}>
+                                        <LoadCanvasTemplateNoReload />
                                     </div>
                                     <label htmlFor="captchaInp" className='mt-2'>Enter security code : &nbsp;</label>
                                     <input type="text" className="form-control shadow-sm border-0" name='captchaInp' style={{ width: 'calc(6rem + 4vw)', padding: '5px 10px', display: 'inline-block', ...inputStyle }} ref={captchaRef} required />&nbsp;

@@ -45,22 +45,28 @@ const Testimonials = () => {
           <div className="carousel-item active">
             <div className="text-center">
               <img src="https://media.istockphoto.com/id/1141737652/photo/portrait-of-a-confident-young-man.jpg?b=1&s=170667a&w=0&k=20&c=Y9fE0UrJiqEADUBx5ccBkExhSmnV5eyQ9kPMeGecGoM=" alt="" className="mt-5" style={{ width: "calc(10rem + 10vw)", height: "20%", borderRadius: '20px' }} />
-              <p className="my-5 fw-semibold" style={{ margin: '0 1vw', fontSize: 'calc(.9rem + .8vw)', padding: '0 5rem', fontFamily: "'Montserrat', sans-serif" }} >I can't thank Backpack enough . They provided me books when I needed them the most that too free .
-                It also helped me to make new connections with the persons pursuing same courses.
+              <p className="my-5" style={{position:'relative', margin: '0 1vw', fontSize: 'calc(.9rem + .7vw)', padding: '0 calc(1rem + 6vw)', fontFamily: "'Montserrat', sans-serif" }} >"I can't thank BackPack enough . They provided me books when I needed them the most, that too free.
+                It also helped me to make new connections with the people pursuing same courses."
+                <br />
+                <span style={{fontSize:'calc(.8rem + .7vw)',fontStyle:"italic"}} className='auser'>- Vibhor Agrawal</span>
               </p>
             </div>
           </div>
           <div className="carousel-item">
             <div className="text-center">
               <img src="https://media.istockphoto.com/id/1165322722/photo/young-indian-college-student-with-holding-file-in-hand.jpg?b=1&s=170667a&w=0&k=20&c=lIYMcoXCMa--SRhFEpJhcf38hPKJvxPVP_P_jx_2bQk=" alt="" className="mt-5" style={{ width: "calc(10rem + 10vw)", borderRadius: '20px' }} />
-              <p className="my-5 fw-semibold" style={{ margin: '0 1vw', fontSize: 'calc(.9rem + .8vw)', padding: '0 5rem', fontFamily: "'Montserrat', sans-serif" }}>A nice initiative taken for students especially like me who cannot afford expensive college books . Through this site I saved my money and time.
+              <p className="my-5" style={{ position:'relative',margin: '0 1vw', fontSize: 'calc(.9rem + .7vw)', padding: '0 calc(1rem + 6vw)', fontFamily: "'Montserrat', sans-serif" }}>"A nice initiative taken for students especially like me who cannot afford expensive college text books . This site helped me to save my money and time and it is also very convenient"
+              <br />
+              <span style={{fontSize:'calc(.8rem + .7vw)',fontStyle:"italic"}} className='auser'>- Neeraj Kumar</span>
               </p>
             </div>
           </div>
           <div className="carousel-item">
             <div className="text-center">
               <img src="https://media.istockphoto.com/id/1128932923/photo/confident-male-college-student-on-campus.jpg?b=1&s=170667a&w=0&k=20&c=dywu73Iw7YEVY0RjQvRTbGvFxs-Q_PiKnJjrIT5Jo1w=" alt="" className="mt-5" style={{ width: "calc(10rem + 10vw)", borderRadius: '20px' }} />
-              <p className="my-5 fw-semibold" style={{ margin: '0 1vw', fontSize: 'calc(.9rem + .8vw)', padding: '0 5rem', fontFamily: "'Montserrat', sans-serif" }}>I was unable to find a book during my examinations , at that time I found BackPack and not only I was able to find the book but also made a new connection with the person doing the same course
+              <p className="my-5" style={{ position:'relative',margin: '0 1vw', fontSize: 'calc(.9rem + .7vw)', padding: '0 calc(1rem + 6vw)', fontFamily: "'Montserrat', sans-serif" }}>"I was unable to find a book during my examinations, at that time I found BackPack and not only I was able to find the book but also made a new connection with the person doing the same course"
+              <br />
+              <span style={{fontSize:'calc(.8rem + .7vw)',fontStyle:"italic"}} className='auser'>- Ujjwal Gupta</span>
               </p>
             </div>
           </div>

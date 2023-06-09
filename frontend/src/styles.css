@@ -36,6 +36,13 @@ body{
 {
    padding-right: 0;
 }
+
+@media (min-width:720px) {
+   .auser{
+      position: absolute;
+      right: 10rem;
+    }
+}
 @media (max-width : 600px)
 {
     .hero-container
@@ -43,7 +50,10 @@ body{
       padding-top: 7rem;
     }
     .lottie-col{
-      transform: translateX(3rem);
+      transform: translate(3rem,1rem);
+    }
+    .heroBtn{
+      transform: translateY(-1rem);
     }
 } 
 @media (max-width : 550px)

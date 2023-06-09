@@ -1,20 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import AuthContext from "../context/AuthContext";
 import ThemeContext from '../context/ThemeContext'
 import Modal from 'react-bootstrap/Modal';
 import sun from './images/sun.png'
 import moon from './images/moon.png'
+import logo from './images/logo.png'
 import '../App.css'
 import ProductContext from '../context/ProductContext';
 
 export default function Navbar(props) {
     const { theme, toggleTheme } = useContext(ThemeContext)
-    const { user, logoutUser } = useContext(AuthContext)
-    const {profileData}=useContext(ProductContext)
+    const { user,setAuthTokens,setUser } = useContext(AuthContext)
+    const {profileData,setProductsData,setProfileData}=useContext(ProductContext)
     const capitalize=(str)=>{
         return (str[0].toUpperCase() + str.slice(1))
     }
+    const navigate=useNavigate()
     const location = useLocation()
     if (location.pathname === '/') document.title = 'BackPack - Home'
     else {
@@ -53,6 +55,16 @@ export default function Navbar(props) {
         }
     }, [theme])
 
+    //logoutUser
+    const logoutUser = () => {
+        setProfileData({})
+        setProductsData([])
+        setAuthTokens(null);
+        setUser(null);
+        localStorage.removeItem("authTokens");
+        navigate("/login");
+    };
+
     return (
         <>
             {/* logout confirmation modal */}
@@ -69,7 +81,8 @@ export default function Navbar(props) {
             {/* Navbar */}
             <nav className="navbar navbar-expand-lg sticky-top py-1" style={{ ...myStyle }}>
                 <div className="container-fluid position-relative" >
-                    <Link className={`navbar-brand text-${theme === 'light' ? 'dark' : 'light'}`} style={{ fontWeight: '500', fontSize: 'calc(1.8rem + .8vw)', marginLeft: '1.5vw', fontFamily: 'sans-serif' }} to='/'>BackPack</Link>
+                    <img src={logo} alt="" width="50" height="50" className="d-inline-block mt-3" style={{marginLeft:"1.5vw"}}/>
+                    <Link className={`me-auto navbar-brand text-${theme === 'light' ? 'dark' : 'light'}`} style={{ fontWeight: '500', fontSize: 'calc(1.8rem + .8vw)', marginLeft: 'calc(.5rem + .5vw)', fontFamily: 'sans-serif' }} to='/'>BackPack</Link>
                     <button className="navbar-toggler shadow-sm border-0 menuBtn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style={{ ...myStyle }}>
                         <i className="fa-solid fa-caret-down"></i>
                         <i className="fa-solid fa-caret-up"></i>
@@ -80,7 +93,7 @@ export default function Navbar(props) {
                                 <Link className={`fs-5 nav-link ${location.pathname === '/' ? `text-${theme === 'light' ? 'dark' : 'light'}` : "text-secondary"}`} style={{ fontSize: 'calc(1rem + .2vw)', margin: "0 .8rem" }} aria-current="page" to="/">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className={`fs-5 nav-link ${location.pathname === '/product' ? `text-${theme === 'light' ? 'dark' : 'light'}` : "text-secondary"}`} style={{ fontSize: 'calc(1rem + .2vw)', margin: "0 .8rem" }} to="/product">Products</Link>
+                                <Link className={`fs-5 nav-link ${location.pathname === '/product' ? `text-${theme === 'light' ? 'dark' : 'light'}` : "text-secondary"}`} style={{ fontSize: 'calc(1rem + .2vw)', margin: "0 .8rem" }} to="/product">Books</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className={`fs-5 nav-link ${location.pathname === '/contactus' ? `text-${theme === 'light' ? 'dark' : 'light'}` : "text-secondary"}`} style={{ fontSize: 'calc(1rem + .2vw)', margin: "0 .8rem" }} to="/contactus">Contact Us</Link>

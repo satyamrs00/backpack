@@ -15,7 +15,7 @@ const Hero = () => {
     }, [theme])
 
     return (
-        <div style={{ height: `${window.screen.availHeight}px`,...myStyle }} className="container-fluid hero-container">
+        <div style={{ height: `100vh`,...myStyle }} className="container-fluid hero-container">
             <div className="row w-100">
                 <div style={{ transform: "translateY(-3vw)" }} className="col-md-6 justify-content-center align-items-center d-flex">
                     <div className="hero-text-div">
@@ -23,9 +23,9 @@ const Hero = () => {
                             You are not alone <br />
                             You have peers...
                         </p>
-                        <p className="ms-1 opacity-75 fw-bold"> Lorem Ipsum has been the industry's standard dummy <br />text ever since the 1500s, when an unknown printer took <br />a galle
-                        </p>
-                        <Link className={`btn btn-outline-${theme==='light'?'dark':"light"} btn-lg mt-3 text-center shadow-none`} to={!user?'/register':'/lendbook'}>{!user?'Get Started':'Help Others'}</Link>
+                        <p className="ms-1 opacity-75 fw-bold"> A platform for you to donate the books you don't need any more <br />And acquire the books you need</p>
+                        <p className="ms-1 fw-bold">"When we give cheerfully and accept gratefully, everyone is blessed"</p>
+                        <Link className={`heroBtn btn btn-outline-${theme==='light'?'dark':"light"} btn-lg mt-3 text-center shadow-none`} to={!user?'/register':'/lendbook'}>{!user?'Get Started':'Help Others'}</Link>
                     </div>
                 </div>
                 <div className="col-md-6 text-center lottie-col">
