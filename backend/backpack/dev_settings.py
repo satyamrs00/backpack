@@ -24,5 +24,5 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "backpack_media")
-DEFAULT_FILE_STORAGE='django.core.files.storage.FileSystemStorage'
+# MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "backpack_media")
+# DEFAULT_FILE_STORAGE='django.core.files.storage.FileSystemStorage'
