@@ -5,13 +5,13 @@ import json
 
 # Create your models here.
 class Product(models.Model):
-    name = models.TextField()
+    name = models.CharField(max_length=100)
     description = models.TextField()
-    photo1 = models.ImageField(upload_to='product_pics',null=True)
-    photo2 = models.ImageField(upload_to='product_pics',null=True)
-    photo3 = models.ImageField(upload_to='product_pics',null=True)
-    photo4 = models.ImageField(upload_to='product_pics',null=True)
-    photo5 = models.ImageField(upload_to='product_pics',null=True)
+    photo1 = models.ImageField(upload_to='product_pics')
+    photo2 = models.ImageField(upload_to='product_pics',null=True,blank=True)
+    photo3 = models.ImageField(upload_to='product_pics',null=True,blank=True)
+    photo4 = models.ImageField(upload_to='product_pics',null=True,blank=True)
+    photo5 = models.ImageField(upload_to='product_pics',null=True,blank=True)
     owner = models.ForeignKey(User,related_name='owned_products',on_delete=models.CASCADE)
     current_owner = models.ForeignKey(User, related_name='current_products',on_delete=models.CASCADE)
     available = models.BooleanField(default=True)
