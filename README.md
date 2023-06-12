@@ -44,6 +44,7 @@ cd frontend
 ```bash
 npm install
 ```
+- Open the file `src/baseurl.js` and change the `baseurl` to `http://localhost:8000/`
 - Run the server
 ```bash
 npm start
