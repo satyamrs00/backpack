@@ -138,7 +138,7 @@ const Profile = () => {
                     {profileData.product.map((ele, index) => {
                       return <div className="col-md-3 my-3 d-flex justify-content-center" key={index}>
                         <div style={{ borderRadius: "10px", boxShadow: `0 0 7px 0px` }}>
-                          <img src={baseurl.slice(0,-1) + ele.photo1} alt="" style={{ width: 'calc(15rem - 3vw)', height: 'calc(13rem - 3vw)', borderTopLeftRadius: "10px", borderTopRightRadius: '10px' }} />
+                          <img src={ele.photo1} alt="" style={{ width: 'calc(15rem - 3vw)', height: 'calc(13rem - 3vw)', borderTopLeftRadius: "10px", borderTopRightRadius: '10px' }} />
                           <h5 className="text-center py-1">{capitalize(ele.name)}</h5>
                           {/* <h6 className="text-center">Owner : {(ele.owner.id === ele.current_owner.id) ? 'You' : (capitalize(ele.owner.first_name) + ' ' + capitalize(ele.owner.last_name))}</h6> */}
                           <h6 className="text-center mt-2">
