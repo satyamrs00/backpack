@@ -37,7 +37,7 @@ export default function ProductDetails() {
         setLoading(true)
         // e.target.innerText = 'Requested'
         // e.target.disabled = 'true'
-        formData.append('product', data.id)
+        formData.append('product_id', data.id)
         try {
             let url = baseurl + 'api/request-product/'
             await api.post(url, formData)

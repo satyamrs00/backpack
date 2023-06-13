@@ -19,6 +19,21 @@ This is a platform to share books and other resources with other students within
     - [API Endpoints](#api-endpoints)
       - [Auth](#auth)
       - [Products](#products)
+>>>>>>> ae8d714f851c1ea614158cec4cdfee9824adfd6a
+- [BACKPACK](#backpack)
+  - [Description](#description)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Motivation](#motivation)
+  - [Features](#features)
+  - [Future Scope](#future-scope)
+  - [Tech Stack](#tech-stack)
+  - [Distinctiveness and Complexity](#distinctiveness-and-complexity)
+  - [Backend Documentation](#backend-documentation)
+    - [Postman Collection](#postman-collection)
+    - [API Endpoints](#api-endpoints)
+      - [Auth](#auth)
+      - [Products](#products)
 ## Installation
 
 - Clone the repository
@@ -52,9 +67,12 @@ npm start
 ```
 - Open the browser and go to http://localhost:3000/
 
+<<<<<<< HEAD
 OR 
 
 - Go to https://main--back-backpack.netlify.app/
+=======
+>>>>>>> ae8d714f851c1ea614158cec4cdfee9824adfd6a
 
 ## Motivation
 
